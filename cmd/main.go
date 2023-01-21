@@ -13,6 +13,9 @@ import (
 	measureUnitAdapters "github.com/viictormg/fribeer-v2/internal/infraesctructure/adapters/database/measure_unit"
 	measureUnitHandlers "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/api/measure_unit"
 
+	unitTimeServices "github.com/viictormg/fribeer-v2/internal/domain/service/unit-time"
+	unitTimeAdapters "github.com/viictormg/fribeer-v2/internal/infraesctructure/adapters/database/unit-time"
+
 	database "github.com/viictormg/fribeer-v2/internal/infraesctructure/pkg/database"
 	"github.com/viictormg/fribeer-v2/internal/server"
 )
@@ -36,6 +39,14 @@ func main() {
 	measureUnitService := measureUnitServices.NewMeasureUnitService(measureUnitAdapter)
 	measureUnitUsecase := measureUnitUsecases.NewMeasureUnitUsecase(measureUnitService)
 	measureUnitHandler := measureUnitHandlers.NewMeasuerUnitHandler(measureUnitUsecase)
+
+	unitTimeAdapter := unitTimeAdapters.NewUnitTimeAdapter(db)
+	unitTimeService := unitTimeServices.NewUnitTimeService(unitTimeAdapter)
+
+	// unitTimeAdapter := unitTimeAdapters.NewMeasureAdaterUnit(db)
+	// measureUnitService := measureUnitServices.NewMeasureUnitService(unitTimeAdapter)
+	// measureUnitUsecase := measureUnitUsecases.NewMeasureUnitUsecase(measureUnitService)
+	// measureUnitHandler := measureUnitHandlers.NewMeasuerUnitHandler(measureUnitUsecase)
 
 	srv := server.NewServer(port, *productHandler, *measureUnitHandler)
 
