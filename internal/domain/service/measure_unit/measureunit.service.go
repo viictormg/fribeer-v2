@@ -2,12 +2,12 @@ package service
 
 import "github.com/viictormg/fribeer-v2/internal/domain/port"
 
-type UnitMeasureService struct {
-	unitmeasureAdater port.IUnitMeasureAdapter
+type MeasureUnitService struct {
+	measureUnitAdater port.IUnitMeasureAdapter
 }
 
-func NewMeasureUnitService(unitmeasureAdater port.IUnitMeasureAdapter) *UnitMeasureService {
-	return &UnitMeasureService{
-		unitmeasureAdater: unitmeasureAdater,
+func NewMeasureUnitService(measureUnitAdater port.IUnitMeasureAdapter) *MeasureUnitService {
+	return &MeasureUnitService{
+		measureUnitAdater: measureUnitAdater,
 	}
 }

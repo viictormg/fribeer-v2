@@ -5,7 +5,7 @@ import "github.com/viictormg/fribeer-v2/internal/domain/dto"
 func (measureAdaterUnit *MeasureAdaterUnit) GetMeasureUnitAdapter() ([]dto.MeasureUnitDTO, error) {
 	var measureUnits []dto.MeasureUnitDTO
 
-	const query = `SELECT id, description, isActive FROM MeasureUnit`
+	const query = `SELECT id, description,  IF(isActive = 1, true, false) FROM MeasureUnit`
 
 	rows, err := measureAdaterUnit.db.Query(query)
 

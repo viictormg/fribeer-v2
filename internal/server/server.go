@@ -32,7 +32,7 @@ func (s *Server) RunServer() {
 	apiPulic := e.Group("/api")
 	apiPulic.POST("/product", s.ProductHandler.CreateProductHandler)
 	apiPulic.POST("/service", s.ProductHandler.CreateServiceHandler)
-	// apiPulic.GET("/", )
+	apiPulic.GET("/measureUnit", s.MeasuerUnitHandler.GetMeasureUnitHandler)
 
 	err := e.Start(":" + s.Port)
 	if err != nil {
