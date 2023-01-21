@@ -47,11 +47,6 @@ func main() {
 	unitTimeUsecase := unitTimeUsecases.NewUnitTimeUseCase(unitTimeService)
 	unitTimeHandler := unitTimeHandlers.NewUnitTimeHandler(unitTimeUsecase)
 
-	// unitTimeAdapter := unitTimeAdapters.NewMeasureAdaterUnit(db)
-	// measureUnitService := measureUnitServices.NewMeasureUnitService(unitTimeAdapter)
-	// measureUnitUsecase := measureUnitUsecases.NewMeasureUnitUsecase(measureUnitService)
-	// measureUnitHandler := measureUnitHandlers.NewMeasuerUnitHandler(measureUnitUsecase)
-
 	srv := server.NewServer(port, *productHandler, *measureUnitHandler, *unitTimeHandler)
 
 	srv.RunServer()
