@@ -25,7 +25,6 @@ func (measureAdaterUnit *MeasureAdaterUnit) GetMeasureUnitAdapter() ([]dto.Measu
 
 		if err != nil {
 			defer rows.Close()
-
 			return measureUnits, err
 		}
 		measureUnits = append(measureUnits, measureUnit)

@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	measureHandlers "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/api/measure_unit"
 	productHandlers "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/api/product"
 )
@@ -28,6 +29,11 @@ func NewServer(
 
 func (s *Server) RunServer() {
 	e := echo.New()
+
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	}))
 
 	apiPulic := e.Group("/api")
 	apiPulic.POST("/product", s.ProductHandler.CreateProductHandler)
