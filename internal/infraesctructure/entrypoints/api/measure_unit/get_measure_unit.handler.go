@@ -28,6 +28,6 @@ func (measuerUnitHandler *MeasuerUnitHandler) GetMeasureUnitHandler(c echo.Conte
 		Timestamp: time.Now(),
 		Data:      measureUnits,
 	}
-	return c.JSON(http.StatusBadRequest, response)
+	return c.JSON(http.StatusOK, response)
 
 }
