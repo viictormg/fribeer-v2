@@ -25,9 +25,9 @@ import (
 func main() {
 	port := "4000"
 
-	os.Setenv("USER_DB", "user-fribeer-remote")
-	os.Setenv("PASSWORD_DB", "2f690df5cc514129881588fee0393")
-	os.Setenv("HOST_DB", "131.0.136.53")
+	os.Setenv("USER_DB", "root")
+	os.Setenv("PASSWORD_DB", "")
+	os.Setenv("HOST_DB", "127.0.0.1")
 	os.Setenv("NAME_DB", "FribeerDB")
 
 	db, _ := database.InitConnectionDB()

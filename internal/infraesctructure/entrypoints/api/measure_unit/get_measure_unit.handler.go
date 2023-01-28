@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/labstack/echo/v4"
-	"github.com/viictormg/fribeer-v2/internal/domain/constants"
 
 	infradto "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/api"
 )
@@ -23,8 +22,7 @@ func (measuerUnitHandler *MeasuerUnitHandler) GetMeasureUnitHandler(c echo.Conte
 	}
 
 	response := infradto.Response{
-		Success:   false,
-		Error:     []string{constants.ErrorDecodeBody},
+		Success:   true,
 		Timestamp: time.Now(),
 		Data:      measureUnits,
 	}
