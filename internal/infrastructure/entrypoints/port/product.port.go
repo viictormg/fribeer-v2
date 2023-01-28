@@ -8,4 +8,5 @@ import (
 type IProductUsecase interface {
 	CreateProductUsecase(product model.Product, companyID string) (dto.CreationDTO, error)
 	CreateServiceUsecase(product model.Service, companyID string) (dto.CreationDTO, error)
+	GetProductsUsecase(typeProduct, companyID string) ([]dto.ProductResponseGet, error)
 }

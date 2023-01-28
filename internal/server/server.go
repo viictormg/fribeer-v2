@@ -41,6 +41,8 @@ func (s *Server) RunServer() {
 
 	apiPulic := e.Group("/api")
 	apiPulic.POST("/product", s.ProductHandler.CreateProductHandler)
+	apiPulic.GET("/product", s.ProductHandler.GetProductsHandler)
+
 	apiPulic.POST("/service", s.ProductHandler.CreateServiceHandler)
 	apiPulic.GET("/measureUnit", s.MeasuerUnitHandler.GetMeasureUnitHandler)
 	apiPulic.GET("/unitTime", s.UnitTimeHandler.GetUnitTimeHandler)

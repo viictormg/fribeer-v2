@@ -8,4 +8,5 @@ import (
 type IProductService interface {
 	CreateProductService(product entity.ProductEntity, companyID string) (dto.CreationDTO, error)
 	CreateServiceService(service entity.ProductEntity, companyID string) (dto.CreationDTO, error)
+	GetProductsService(typeProduct, companyID string) ([]dto.ProductResponseGet, error)
 }

@@ -9,7 +9,7 @@ import (
 
 const errDBGetAllProducts = "error consulting db"
 
-func (productAdapter *ProductAdapter) GetProducts(companyID, typeProduct string) ([]dto.ProductResponseGet, error) {
+func (productAdapter *ProductAdapter) GetProductsAllAdapter(companyID string) ([]dto.ProductResponseGet, error) {
 	var products []dto.ProductResponseGet
 
 	const query = `SELECT p.id, name, p.description, tp.description AS typeProduct,
@@ -25,7 +25,7 @@ func (productAdapter *ProductAdapter) GetProducts(companyID, typeProduct string)
 					LEFT JOIN UnitTime ut ON ut.id = p.unitTime
 					WHERE p.company  = ?`
 
-	rows, err := productAdapter.db.Query(query)
+	rows, err := productAdapter.db.Query(query, companyID)
 
 	if err != nil {
 		fmt.Println("error db products", err.Error())
@@ -34,14 +34,31 @@ func (productAdapter *ProductAdapter) GetProducts(companyID, typeProduct string)
 
 	defer rows.Close()
 
-	// for rows.Next() {
-	// 	var product dto.ProductResponseGet
+	for rows.Next() {
+		var product dto.ProductResponseGet
 
-	// 	err = rows.Scan(
-	// 	// &product
-	// 	)
+		err = rows.Scan(
+			&product.ID,
+			&product.Name,
+			&product.Description,
+			&product.TypeProduct,
+			&product.MeasureUnit,
+			&product.QuantityStock,
+			&product.MinStock,
+			&product.Price,
+			&product.Cost,
+			&product.IsFrequency,
+			&product.UnitTime,
+			&product.Duration,
+			&product.IsActive,
+		)
 
-	// }
+		if err != nil {
+			return products, err
+		}
+
+		products = append(products, product)
+	}
 
 	return products, nil
 }
