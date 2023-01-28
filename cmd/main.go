@@ -18,6 +18,11 @@ import (
 	unitTimeAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/unit_time"
 	unitTimeHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/unit_time"
 
+	typeDocumentUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/type_document"
+	typeDocumentServices "github.com/viictormg/fribeer-v2/internal/domain/service/type_document"
+	typeDocumentAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/type_document"
+	typeDocumentHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/type_document"
+
 	database "github.com/viictormg/fribeer-v2/internal/infrastructure/pkg/database"
 	"github.com/viictormg/fribeer-v2/internal/server"
 )
@@ -47,7 +52,12 @@ func main() {
 	unitTimeUsecase := unitTimeUsecases.NewUnitTimeUseCase(unitTimeService)
 	unitTimeHandler := unitTimeHandlers.NewUnitTimeHandler(unitTimeUsecase)
 
-	srv := server.NewServer(port, *productHandler, *measureUnitHandler, *unitTimeHandler)
+	typeDocumentAdapter := typeDocumentAdapters.NewTypeDocumentAdapter(db)
+	typeDocumentService := typeDocumentServices.NewTypeDocumentService(typeDocumentAdapter)
+	typeDocumentUsecase := typeDocumentUsecases.NewTypeDocumentUseCase(typeDocumentService)
+	typeDocumentHandler := typeDocumentHandlers.NewTypeDocumentHandler(typeDocumentUsecase)
+
+	srv := server.NewServer(port, *productHandler, *measureUnitHandler, *unitTimeHandler, *typeDocumentHandler)
 
 	srv.RunServer()
 }

@@ -7,14 +7,16 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	measureHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/measure_unit"
 	productHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/product"
+	typeDocumentHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/type_document"
 	unitTimeHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/unit_time"
 )
 
 type Server struct {
-	Port               string
-	ProductHandler     productHandlers.ProductHandler
-	MeasuerUnitHandler measureHandlers.MeasuerUnitHandler
-	UnitTimeHandler    unitTimeHandlers.UnitTimeHandler
+	Port                string
+	ProductHandler      productHandlers.ProductHandler
+	MeasuerUnitHandler  measureHandlers.MeasuerUnitHandler
+	UnitTimeHandler     unitTimeHandlers.UnitTimeHandler
+	TypeDocumentHandler typeDocumentHandlers.TypeDocumentHandler
 }
 
 func NewServer(
@@ -22,12 +24,14 @@ func NewServer(
 	productHandler productHandlers.ProductHandler,
 	MeasuerUnitHandler measureHandlers.MeasuerUnitHandler,
 	UnitTimeHandler unitTimeHandlers.UnitTimeHandler,
+	TypeDocumentHandler typeDocumentHandlers.TypeDocumentHandler,
 ) *Server {
 	return &Server{
-		Port:               port,
-		ProductHandler:     productHandler,
-		MeasuerUnitHandler: MeasuerUnitHandler,
-		UnitTimeHandler:    UnitTimeHandler,
+		Port:                port,
+		ProductHandler:      productHandler,
+		MeasuerUnitHandler:  MeasuerUnitHandler,
+		UnitTimeHandler:     UnitTimeHandler,
+		TypeDocumentHandler: TypeDocumentHandler,
 	}
 }
 
@@ -44,6 +48,7 @@ func (s *Server) RunServer() {
 	apiPulic.POST("/service", s.ProductHandler.CreateServiceHandler)
 	apiPulic.GET("/measureUnit", s.MeasuerUnitHandler.GetMeasureUnitHandler)
 	apiPulic.GET("/unitTime", s.UnitTimeHandler.GetUnitTimeHandler)
+	apiPulic.GET("/typeDocument", s.TypeDocumentHandler.GetTypeDocumentHandler)
 
 	err := e.Start(":" + s.Port)
 	if err != nil {

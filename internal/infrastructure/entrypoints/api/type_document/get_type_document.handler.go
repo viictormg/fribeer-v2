@@ -9,8 +9,8 @@ import (
 	infradto "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api"
 )
 
-func (UnitTimeHandler *UnitTimeHandler) GetUnitTimeHandler(c echo.Context) error {
-	unitTimes, err := UnitTimeHandler.unitTimeUseCase.GetUnitTimeUsecase()
+func (TypeDocumentHandler *TypeDocumentHandler) GetTypeDocumentHandler(c echo.Context) error {
+	unitTimes, err := TypeDocumentHandler.typeDocumentUseCase.GetTypeDocumentUsecase()
 
 	if err != nil {
 		response := infradto.Response{
