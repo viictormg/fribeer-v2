@@ -1,6 +1,6 @@
 package dto
 
-type ProductResponseGetAll struct {
+type ProductResponseGet struct {
 	Id            string  `json:"id"`
 	Name          string  `json:"name"`
 	Description   string  `json:"description"`

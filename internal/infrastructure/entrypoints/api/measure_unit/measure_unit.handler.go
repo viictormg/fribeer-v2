@@ -1,6 +1,6 @@
 package api
 
-import "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/port"
+import "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/port"
 
 type MeasuerUnitHandler struct {
 	measureUnitUsecase port.IMeasureUnitUsecase

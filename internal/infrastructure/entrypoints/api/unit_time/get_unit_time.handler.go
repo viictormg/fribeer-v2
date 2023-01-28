@@ -7,7 +7,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/viictormg/fribeer-v2/internal/domain/constants"
 
-	infradto "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/api"
+	infradto "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api"
 )
 
 func (UnitTimeHandler *UnitTimeHandler) GetUnitTimeHandler(c echo.Context) error {

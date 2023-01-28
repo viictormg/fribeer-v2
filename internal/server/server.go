@@ -5,9 +5,9 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	measureHandlers "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/api/measure_unit"
-	productHandlers "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/api/product"
-	unitTimeHandlers "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/api/unit_time"
+	measureHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/measure_unit"
+	productHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/product"
+	unitTimeHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/unit_time"
 )
 
 type Server struct {

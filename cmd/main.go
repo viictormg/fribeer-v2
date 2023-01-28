@@ -5,20 +5,20 @@ import (
 
 	productUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/product-service"
 	productServices "github.com/viictormg/fribeer-v2/internal/domain/service/product-service"
-	productAdapters "github.com/viictormg/fribeer-v2/internal/infraesctructure/adapters/database/product-service"
-	productHandlers "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/api/product"
+	productAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/product-service"
+	productHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/product"
 
 	measureUnitUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/measure_unit"
 	measureUnitServices "github.com/viictormg/fribeer-v2/internal/domain/service/measure_unit"
-	measureUnitAdapters "github.com/viictormg/fribeer-v2/internal/infraesctructure/adapters/database/measure_unit"
-	measureUnitHandlers "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/api/measure_unit"
+	measureUnitAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/measure_unit"
+	measureUnitHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/measure_unit"
 
 	unitTimeUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/unit_time"
 	unitTimeServices "github.com/viictormg/fribeer-v2/internal/domain/service/unit_time"
-	unitTimeAdapters "github.com/viictormg/fribeer-v2/internal/infraesctructure/adapters/database/unit_time"
-	unitTimeHandlers "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/api/unit_time"
+	unitTimeAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/unit_time"
+	unitTimeHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/unit_time"
 
-	database "github.com/viictormg/fribeer-v2/internal/infraesctructure/pkg/database"
+	database "github.com/viictormg/fribeer-v2/internal/infrastructure/pkg/database"
 	"github.com/viictormg/fribeer-v2/internal/server"
 )
 

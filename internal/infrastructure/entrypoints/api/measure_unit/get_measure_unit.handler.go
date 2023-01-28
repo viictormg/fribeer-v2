@@ -6,7 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	infradto "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/api"
+	infradto "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api"
 )
 
 func (measuerUnitHandler *MeasuerUnitHandler) GetMeasureUnitHandler(c echo.Context) error {

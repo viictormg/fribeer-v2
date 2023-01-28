@@ -7,13 +7,13 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/viictormg/fribeer-v2/internal/application/model"
 	"github.com/viictormg/fribeer-v2/internal/domain/constants"
-	infradto "github.com/viictormg/fribeer-v2/internal/infraesctructure/entrypoints/api"
+	infradto "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api"
 )
 
-func (productHandler *ProductHandler) CreateServiceHandler(c echo.Context) error {
-	var service model.Service
+func (productHandler *ProductHandler) CreateProductHandler(c echo.Context) error {
+	var product model.Product
 
-	err := c.Bind(&service)
+	err := c.Bind(&product)
 
 	if err != nil {
 		response := infradto.Response{
@@ -24,7 +24,8 @@ func (productHandler *ProductHandler) CreateServiceHandler(c echo.Context) error
 		return c.JSON(http.StatusBadRequest, response)
 	}
 
-	errValidation := service.Validate()
+	errValidation := product.Validate()
+
 	if len(errValidation) > 0 {
 		response := infradto.Response{
 			Success:   false,
@@ -34,14 +35,22 @@ func (productHandler *ProductHandler) CreateServiceHandler(c echo.Context) error
 		return c.JSON(http.StatusBadRequest, response)
 	}
 
-	companyID := "4f76fe5e-527f-11ed-867b-005056a61a3a"
-
-	creation, err := productHandler.productUsecase.CreateServiceUsecase(service, companyID)
+	creation, err := productHandler.productUsecase.CreateProductUsecase(product, constants.CompanyIDTest)
+	if err != nil {
+		response := infradto.Response{
+			Success:   false,
+			Error:     []string{err.Error()},
+			Message:   constants.MessageErrorCreate,
+			Timestamp: time.Now(),
+		}
+		return c.JSON(http.StatusConflict, response)
+	}
 
 	response := infradto.Response{
 		Success:   true,
 		Error:     errValidation,
 		Data:      creation,
+		Message:   constants.MessageCreate,
 		Timestamp: time.Now(),
 	}
 	return c.JSON(http.StatusCreated, response)
