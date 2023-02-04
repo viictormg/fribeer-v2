@@ -11,7 +11,7 @@ import (
 )
 
 func (productHandler *ProductHandler) CreateServiceHandler(c echo.Context) error {
-	var service model.Service
+	var service model.ServiceModel
 
 	err := c.Bind(&service)
 

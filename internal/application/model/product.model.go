@@ -7,7 +7,7 @@ import (
 	"github.com/viictormg/fribeer-v2/internal/domain/constants"
 )
 
-type Product struct {
+type ProductModel struct {
 	Name        string  `json:"name"`
 	Description string  `json:"description"`
 	MeasureUnit string  `json:"measureUnit"`
@@ -16,7 +16,7 @@ type Product struct {
 	MinStock    int     `json:"minStock"`
 }
 
-func (p *Product) Validate() []string {
+func (p *ProductModel) Validate() []string {
 	err := validation.ValidateStruct(p,
 		validation.Field(&p.Name, validation.Required.Error(constants.FieldRequiredMessage)),
 		validation.Field(&p.MeasureUnit, validation.Required.Error(constants.FieldRequiredMessage)),

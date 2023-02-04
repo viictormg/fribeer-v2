@@ -10,14 +10,14 @@ const (
 	idProductService = "1aba8311-67e5-11ed-867b-005056a61a3a"
 )
 
-func (ProductUsecase *ProductUsecase) CreateServiceUsecase(service model.Service, companyID string) (dto.CreationDTO, error) {
+func (ProductUsecase *ProductUsecase) CreateServiceUsecase(service model.ServiceModel, companyID string) (dto.CreationDTO, error) {
 	serviceEntity := entity.ProductEntity{
 		Name:        service.Name,
 		Description: service.Description,
 		Price:       service.Price,
 		Cost:        service.Cost,
 		IsFrequency: service.IsFrequency,
-		UnitTime:    service.UnitTime,
+		UnitTime:    service.IDUnitTime,
 		Duration:    service.Duration,
 		TypeProduct: idProductService,
 	}

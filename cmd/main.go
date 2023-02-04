@@ -24,7 +24,7 @@ import (
 	typeDocumentHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/type_document"
 
 	database "github.com/viictormg/fribeer-v2/internal/infrastructure/pkg/database"
-	"github.com/viictormg/fribeer-v2/internal/server"
+	"github.com/viictormg/fribeer-v2/internal/infrastructure/server"
 )
 
 func main() {
@@ -57,7 +57,13 @@ func main() {
 	typeDocumentUsecase := typeDocumentUsecases.NewTypeDocumentUseCase(typeDocumentService)
 	typeDocumentHandler := typeDocumentHandlers.NewTypeDocumentHandler(typeDocumentUsecase)
 
-	srv := server.NewServer(port, *productHandler, *measureUnitHandler, *unitTimeHandler, *typeDocumentHandler)
+	srv := server.NewServer(
+		port,
+		*productHandler,
+		*measureUnitHandler,
+		*unitTimeHandler,
+		*typeDocumentHandler,
+	)
 
 	srv.RunServer()
 }

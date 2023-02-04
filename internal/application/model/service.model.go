@@ -7,17 +7,18 @@ import (
 	"github.com/viictormg/fribeer-v2/internal/domain/constants"
 )
 
-type Service struct {
-	Name        string
-	Description string
-	Price       float64
-	Cost        float64
-	IsFrequency bool
-	UnitTime    string
-	Duration    int
+type ServiceModel struct {
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Price       float64 `json:"price"`
+	Cost        float64 `json:""`
+	IsFrequency bool    `json:"isFrequency"`
+	IDUnitTime  string  `json:"idUnitTime"`
+	Duration    int     `json:"duration"`
 }
 
-func (s *Service) Validate() []string {
+// {"name":"Servicio masajes","description":"","price":50000,"cost":0,"isFrequency":true,"duration":2,"idUnitTime":"0e574690-51c8-11ed-860e-005056a61a3a"}
+func (s *ServiceModel) Validate() []string {
 	err := validation.ValidateStruct(s,
 		validation.Field(&s.Name, validation.Required.Error(constants.FieldRequiredMessage)),
 		validation.Field(&s.Price, validation.Required.Error(constants.FieldRequiredMessage)),

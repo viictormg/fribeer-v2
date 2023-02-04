@@ -11,7 +11,7 @@ import (
 )
 
 func (productHandler *ProductHandler) CreateProductHandler(c echo.Context) error {
-	var product model.Product
+	var product model.ProductModel
 
 	err := c.Bind(&product)
 
