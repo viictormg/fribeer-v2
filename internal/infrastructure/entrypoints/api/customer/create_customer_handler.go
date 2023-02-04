@@ -2,6 +2,7 @@ package api
 
 import (
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -10,10 +11,10 @@ import (
 	infradto "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api"
 )
 
-func (productHandler *ProductHandler) CreateServiceHandler(c echo.Context) error {
-	var service model.ServiceModel
+func (customerHandler *CustomerHandler) CreateCustomerHandler(c echo.Context) error {
+	var customer model.CustomerCreateModel
 
-	err := c.Bind(&service)
+	err := c.Bind(&customer)
 
 	if err != nil {
 		response := infradto.Response{
@@ -23,18 +24,19 @@ func (productHandler *ProductHandler) CreateServiceHandler(c echo.Context) error
 		}
 		return c.JSON(http.StatusBadRequest, response)
 	}
+	err = customer.Validate()
 
-	errValidation := service.Validate()
-	if len(errValidation) > 0 {
+	if err != nil {
 		response := infradto.Response{
 			Success:   false,
-			Error:     errValidation,
+			Error:     strings.Split(err.Error(), "; "),
 			Timestamp: time.Now(),
 		}
 		return c.JSON(http.StatusBadRequest, response)
 	}
 
-	creation, err := productHandler.productUsecase.CreateServiceUsecase(service, constants.CompanyIDTest)
+	creation, err := customerHandler.customerUsecase.CreateCustomerUsecase(customer)
+
 	if err != nil {
 		response := infradto.Response{
 			Success:   false,
@@ -51,4 +53,5 @@ func (productHandler *ProductHandler) CreateServiceHandler(c echo.Context) error
 		Timestamp: time.Now(),
 	}
 	return c.JSON(http.StatusCreated, response)
+
 }

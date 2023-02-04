@@ -23,6 +23,11 @@ import (
 	typeDocumentAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/type_document"
 	typeDocumentHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/type_document"
 
+	customerUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/customer"
+	peopleServices "github.com/viictormg/fribeer-v2/internal/domain/service/people"
+	peopleAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/people"
+	customerHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/customer"
+
 	database "github.com/viictormg/fribeer-v2/internal/infrastructure/pkg/database"
 	"github.com/viictormg/fribeer-v2/internal/infrastructure/server"
 )
@@ -57,12 +62,19 @@ func main() {
 	typeDocumentUsecase := typeDocumentUsecases.NewTypeDocumentUseCase(typeDocumentService)
 	typeDocumentHandler := typeDocumentHandlers.NewTypeDocumentHandler(typeDocumentUsecase)
 
+	peopleAdapter := peopleAdapters.NewPeopleAdapter(db)
+	peopleService := peopleServices.NewPeopleService(peopleAdapter)
+	customerUsecase := customerUsecases.NewCustomerUsecase(peopleService)
+
+	customerHandler := customerHandlers.NewCustomerHandler(customerUsecase)
+
 	srv := server.NewServer(
 		port,
 		*productHandler,
 		*measureUnitHandler,
 		*unitTimeHandler,
 		*typeDocumentHandler,
+		*customerHandler,
 	)
 
 	srv.RunServer()
