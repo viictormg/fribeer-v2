@@ -12,7 +12,7 @@ const errorDBGetCustomer = "error consulting db"
 func (peopleAdapter *PeopleAdapter) GetCustomerAdapter(companyID string) ([]dto.GetPeopleDTO, error) {
 	var customers []dto.GetPeopleDTO
 
-	const query = `SELECT p.id, CONCAT_WS(" ", p.firstName, p.secondName, p.surname, p.lastSurname) AS nameComplete,
+	const query = `SELECT p.id, CONCAT_WS(" ", p.firstName, p.secondName, p.surname, p.lastSurname) AS fullName,
 						p.documentNumber, p.phone, p.email
 						FROM People p
 						JOIN TypePeople tp ON p.typePeople = tp.id
@@ -33,7 +33,7 @@ func (peopleAdapter *PeopleAdapter) GetCustomerAdapter(companyID string) ([]dto.
 
 		err = rows.Scan(
 			&customer.ID,
-			&customer.NameComplete,
+			&customer.FullName,
 			&customer.Document,
 			&customer.Phone,
 			&customer.Email,
