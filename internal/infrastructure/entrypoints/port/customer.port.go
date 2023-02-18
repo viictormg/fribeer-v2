@@ -6,5 +6,5 @@ import (
 )
 
 type ICustomerUsecase interface {
-	CreateCustomerUsecase(customer model.CustomerCreateModel) (dto.CreationDTO, error)
+	CreateCustomerUsecase(customer model.CustomerCreateModel, companyID string) (dto.CreationDTO, error)
 }

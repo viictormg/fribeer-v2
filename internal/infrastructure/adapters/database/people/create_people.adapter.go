@@ -2,6 +2,7 @@ package adapters
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
@@ -10,10 +11,10 @@ import (
 
 const errCreatePeopleDatabase = "error create people database"
 
-func (peopleAdapter *PeopleAdapter) CreatePeopleAdapter(people entity.PeopleEntity) (dto.CreationDTO, error) {
+func (peopleAdapter *PeopleAdapter) CreatePeopleAdapter(people entity.PeopleEntity, company string) (dto.CreationDTO, error) {
 	id := uuid.NewString()
 
-	query := `INSERT INTO people(id, typePeople, firstName, secondName, 
+	query := `INSERT INTO People(id, typePeople, firstName, secondName, 
 								surname, lastSurname, typeDocument, documentNumber, 
 								birthdate, phone, address, email, company, isActive) 
 					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
@@ -31,10 +32,12 @@ func (peopleAdapter *PeopleAdapter) CreatePeopleAdapter(people entity.PeopleEnti
 		people.Phone,
 		people.Address,
 		people.Email,
+		company,
 		true,
 	)
 
 	if err != nil {
+		fmt.Println(err)
 		return dto.CreationDTO{}, errors.New(errCreatePeopleDatabase)
 	}
 

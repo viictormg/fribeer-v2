@@ -6,5 +6,5 @@ import (
 )
 
 type IPeopleAdapter interface {
-	CreatePeopleAdapter(people entity.PeopleEntity) (dto.CreationDTO, error)
+	CreatePeopleAdapter(people entity.PeopleEntity, companyID string) (dto.CreationDTO, error)
 }

@@ -8,9 +8,10 @@ import (
 
 func MapCreatePeopleModelPeopleEntity(customer model.CustomerCreateModel) entity.PeopleEntity {
 	return entity.PeopleEntity{
-		FirstName:  customer.FirstName,
-		TypePeople: constants.TypePeopleCustomerID,
-		SecondName: customer.SecondName,
-		Phone:      customer.Phone,
+		FirstName:    customer.FirstName,
+		TypePeople:   constants.TypePeopleCustomerID,
+		SecondName:   customer.SecondName,
+		Phone:        customer.Phone,
+		TypeDocument: customer.TypeDocument,
 	}
 }

@@ -6,5 +6,5 @@ import (
 )
 
 type IPeopleService interface {
-	CreatePeopleService(people entity.PeopleEntity) (dto.CreationDTO, error)
+	CreatePeopleService(people entity.PeopleEntity, companyID string) (dto.CreationDTO, error)
 }

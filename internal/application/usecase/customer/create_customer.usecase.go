@@ -6,8 +6,8 @@ import (
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 )
 
-func (customerUsecase *CustomerUsecase) CreateCustomerUsecase(customer model.CustomerCreateModel) (dto.CreationDTO, error) {
+func (customerUsecase *CustomerUsecase) CreateCustomerUsecase(customer model.CustomerCreateModel, companyID string) (dto.CreationDTO, error) {
 	customerEntity := mapper.MapCreatePeopleModelPeopleEntity(customer)
 
-	return customerUsecase.peopleService.CreatePeopleService(customerEntity)
+	return customerUsecase.peopleService.CreatePeopleService(customerEntity, companyID)
 }

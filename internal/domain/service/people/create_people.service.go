@@ -5,6 +5,6 @@ import (
 	"github.com/viictormg/fribeer-v2/internal/domain/entity"
 )
 
-func (peopleService *PeopleService) CreatePeopleService(people entity.PeopleEntity) (dto.CreationDTO, error) {
-	return peopleService.peopleAdapter.CreatePeopleAdapter(people)
+func (peopleService *PeopleService) CreatePeopleService(people entity.PeopleEntity, companyID string) (dto.CreationDTO, error) {
+	return peopleService.peopleAdapter.CreatePeopleAdapter(people, companyID)
 }

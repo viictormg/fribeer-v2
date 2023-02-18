@@ -35,7 +35,7 @@ func (customerHandler *CustomerHandler) CreateCustomerHandler(c echo.Context) er
 		return c.JSON(http.StatusBadRequest, response)
 	}
 
-	creation, err := customerHandler.customerUsecase.CreateCustomerUsecase(customer)
+	creation, err := customerHandler.customerUsecase.CreateCustomerUsecase(customer, constants.CompanyIDTest)
 
 	if err != nil {
 		response := infradto.Response{
@@ -44,7 +44,6 @@ func (customerHandler *CustomerHandler) CreateCustomerHandler(c echo.Context) er
 			Timestamp: time.Now(),
 		}
 		return c.JSON(http.StatusConflict, response)
-
 	}
 
 	response := infradto.Response{

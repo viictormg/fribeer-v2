@@ -1,9 +1,6 @@
 package adapters
 
 import (
-	"errors"
-	"fmt"
-
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 )
 
@@ -25,19 +22,19 @@ func (productAdapter *ProductAdapter) GetProductsAllAdapter(companyID string) ([
 					LEFT JOIN UnitTime ut ON ut.id = p.unitTime
 					WHERE p.company  = ?`
 
-	rows, err := productAdapter.db.Query(query, companyID)
+	rows, _ := productAdapter.db.Query(query, companyID)
 
-	if err != nil {
-		fmt.Println("error db products", err.Error())
-		return products, errors.New(errDBGetAllProducts)
-	}
+	// if err != nil {
+	// 	fmt.Println("error db products", err.Error())
+	// 	return products, errors.New(errDBGetAllProducts)
+	// }
 
 	defer rows.Close()
 
 	for rows.Next() {
 		var product dto.ProductResponseGet
 
-		err = rows.Scan(
+		err := rows.Scan(
 			&product.ID,
 			&product.Name,
 			&product.Description,
@@ -62,3 +59,31 @@ func (productAdapter *ProductAdapter) GetProductsAllAdapter(companyID string) ([
 
 	return products, nil
 }
+
+// RENAME TABLE account TO Account;
+// RENAME TABLE accountingrecords TO Accountingrecords;
+// RENAME TABLE campus TO Aampus;
+// RENAME TABLE company TO Company;
+// RENAME TABLE config TO Config;
+// RENAME TABLE historystock TO Historystock;
+// RENAME TABLE jobs TO Jobs;
+// RENAME TABLE measureunit TO Measureunit;
+// RENAME TABLE module TO Module;
+// RENAME TABLE modulesforcompany TO ModulesForCompany;
+// RENAME TABLE notifications TO Notifications;
+// RENAME TABLE payment TO Payment;
+// RENAME TABLE paymentdetail TO PaymentDetail;
+// RENAME TABLE paymentmethod TO PaymentMethod;
+// RENAME TABLE people TO People;
+// RENAME TABLE permission TO Permission;
+// RENAME TABLE rol TO Rol;
+// RENAME TABLE sale TO Sale;
+// RENAME TABLE saledetail TO Saledetail;
+// RENAME TABLE servicecard TO ServiceCard;
+// RENAME TABLE state TO State;
+// RENAME TABLE typecompany TO TypeCompany;
+// RENAME TABLE typedocument TO TypeDocument;
+// RENAME TABLE typepayment TO TypePayment;
+// RENAME TABLE typepeople TO TypePeople;
+// RENAME TABLE typeproduct TO Typeproduct;
+// RENAME TABLE unittime TO UnitTime;
