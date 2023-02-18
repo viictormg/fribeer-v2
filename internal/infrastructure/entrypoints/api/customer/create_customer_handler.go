@@ -41,6 +41,7 @@ func (customerHandler *CustomerHandler) CreateCustomerHandler(c echo.Context) er
 		response := infradto.Response{
 			Success:   false,
 			Error:     []string{err.Error()},
+			Message:   constants.MessageErrorFind,
 			Timestamp: time.Now(),
 		}
 		return c.JSON(http.StatusConflict, response)
@@ -49,6 +50,7 @@ func (customerHandler *CustomerHandler) CreateCustomerHandler(c echo.Context) er
 	response := infradto.Response{
 		Success:   true,
 		Data:      creation,
+		Message:   constants.MessageCreate,
 		Timestamp: time.Now(),
 	}
 	return c.JSON(http.StatusCreated, response)

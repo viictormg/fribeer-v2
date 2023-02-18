@@ -1,6 +1,9 @@
 package adapters
 
 import (
+	"errors"
+	"fmt"
+
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 )
 
@@ -22,19 +25,19 @@ func (productAdapter *ProductAdapter) GetProductsAllAdapter(companyID string) ([
 					LEFT JOIN UnitTime ut ON ut.id = p.unitTime
 					WHERE p.company  = ?`
 
-	rows, _ := productAdapter.db.Query(query, companyID)
+	rows, err := productAdapter.db.Query(query, companyID)
 
-	// if err != nil {
-	// 	fmt.Println("error db products", err.Error())
-	// 	return products, errors.New(errDBGetAllProducts)
-	// }
+	if err != nil {
+		fmt.Println("error db products", err.Error())
+		return products, errors.New(errDBGetAllProducts)
+	}
 
 	defer rows.Close()
 
 	for rows.Next() {
 		var product dto.ProductResponseGet
 
-		err := rows.Scan(
+		err = rows.Scan(
 			&product.ID,
 			&product.Name,
 			&product.Description,

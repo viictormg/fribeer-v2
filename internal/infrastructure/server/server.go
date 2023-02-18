@@ -56,7 +56,9 @@ func (s *Server) RunServer() {
 	apiPulic.GET("/measureUnit", s.MeasuerUnitHandler.GetMeasureUnitHandler)
 	apiPulic.GET("/unitTime", s.UnitTimeHandler.GetUnitTimeHandler)
 	apiPulic.GET("/typeDocument", s.TypeDocumentHandler.GetTypeDocumentHandler)
+
 	apiPulic.POST("/customer", s.CustomerHandlers.CreateCustomerHandler)
+	apiPulic.GET("/customer", s.CustomerHandlers.GetCustomerHandler)
 
 	err := e.Start(":" + s.Port)
 	if err != nil {
