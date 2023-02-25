@@ -30,7 +30,6 @@ func (peopleAdapter *PeopleAdapter) GetCustomerAdapter(companyID string) ([]dto.
 
 	for rows.Next() {
 		var customer dto.GetPeopleDTO
-
 		err = rows.Scan(
 			&customer.ID,
 			&customer.FullName,
@@ -45,7 +44,6 @@ func (peopleAdapter *PeopleAdapter) GetCustomerAdapter(companyID string) ([]dto.
 
 		customers = append(customers, customer)
 	}
-
 	return customers, nil
 
 }

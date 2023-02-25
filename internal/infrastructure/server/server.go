@@ -8,6 +8,7 @@ import (
 	customerHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/customer"
 	measureHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/measure_unit"
 	productHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/product"
+	saleHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/sale"
 	typeDocumentHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/type_document"
 	unitTimeHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/unit_time"
 )
@@ -19,6 +20,7 @@ type Server struct {
 	UnitTimeHandler     unitTimeHandlers.UnitTimeHandler
 	TypeDocumentHandler typeDocumentHandlers.TypeDocumentHandler
 	CustomerHandlers    customerHandlers.CustomerHandler
+	SaleHandlers        saleHandlers.SaleHandler
 }
 
 func NewServer(
@@ -28,6 +30,7 @@ func NewServer(
 	UnitTimeHandler unitTimeHandlers.UnitTimeHandler,
 	TypeDocumentHandler typeDocumentHandlers.TypeDocumentHandler,
 	CustomerHandlers customerHandlers.CustomerHandler,
+	SaleHandlers saleHandlers.SaleHandler,
 
 ) *Server {
 	return &Server{
@@ -59,6 +62,8 @@ func (s *Server) RunServer() {
 
 	apiPulic.POST("/customer", s.CustomerHandlers.CreateCustomerHandler)
 	apiPulic.GET("/customer", s.CustomerHandlers.GetCustomerHandler)
+
+	apiPulic.POST("/sale", s.SaleHandlers.CreateSaleHandler)
 
 	err := e.Start(":" + s.Port)
 	if err != nil {
