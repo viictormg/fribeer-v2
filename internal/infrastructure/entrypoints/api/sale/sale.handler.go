@@ -1,8 +1,13 @@
-package sale
+package api
+
+import "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/port"
 
 type SaleHandler struct {
+	saleUsecase port.ISaleUsecase
 }
 
-func NewSaleHandler() *SaleHandler {
-	return &SaleHandler{}
+func NewSaleHandler(saleUsecase port.ISaleUsecase) *SaleHandler {
+	return &SaleHandler{
+		saleUsecase: saleUsecase,
+	}
 }
