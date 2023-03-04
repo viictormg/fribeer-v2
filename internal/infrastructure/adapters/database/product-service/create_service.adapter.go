@@ -2,7 +2,6 @@ package adapters
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
@@ -33,7 +32,6 @@ func (productAdapter *ProductAdapter) CreateServiceAdapter(product entity.Produc
 	)
 
 	if err != nil {
-		fmt.Println(errorCreateServiceDataBase, err)
 		return dto.CreationDTO{}, errors.New(errorCreateServiceDataBase)
 	}
 

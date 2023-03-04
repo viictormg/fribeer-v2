@@ -2,7 +2,6 @@ package adapters
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
@@ -37,7 +36,6 @@ func (peopleAdapter *PeopleAdapter) CreatePeopleAdapter(people entity.PeopleEnti
 	)
 
 	if err != nil {
-		fmt.Println(err)
 		return dto.CreationDTO{}, errors.New(errCreatePeopleDatabase)
 	}
 

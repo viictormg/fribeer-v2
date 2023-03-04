@@ -2,7 +2,6 @@ package service
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/viictormg/fribeer-v2/internal/application/model"
 	"github.com/viictormg/fribeer-v2/internal/domain/constants"
@@ -16,7 +15,6 @@ func (saleService *SaleService) GetDetailProductsService(products []model.Produc
 	for _, product := range products {
 		p, err := saleService.productAdapter.GetProductByIDAdapter(product.ProductID, companyID)
 		if err != nil {
-			fmt.Println(err)
 			return []entity.SaleDetailEntity{}, 0, errors.New(constants.MessageNotFound)
 		}
 

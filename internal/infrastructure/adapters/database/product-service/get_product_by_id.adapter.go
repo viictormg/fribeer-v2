@@ -1,15 +1,11 @@
 package adapters
 
 import (
-	"fmt"
-
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 )
 
 func (productAdapter *ProductAdapter) GetProductByIDAdapter(id, companyID string) (dto.ProductResponseGet, error) {
 	var product dto.ProductResponseGet
-
-	fmt.Println(companyID, id)
 
 	const query = `SELECT p.id, name, p.description, tp.description AS typeProduct,
 						IFNULL(mu.description, "") AS measureUnit, 
@@ -40,7 +36,6 @@ func (productAdapter *ProductAdapter) GetProductByIDAdapter(id, companyID string
 		&product.Duration,
 		&product.IsActive)
 	if err != nil {
-		fmt.Println(err)
 		return product, err
 	}
 

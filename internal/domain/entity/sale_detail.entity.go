@@ -10,4 +10,5 @@ type SaleDetailEntity struct {
 	Discount     float64
 	Observations string
 	Company      string
+	IsActive     bool
 }

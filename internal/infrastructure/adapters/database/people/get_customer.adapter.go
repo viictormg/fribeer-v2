@@ -2,7 +2,6 @@ package adapters
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 )
@@ -22,7 +21,6 @@ func (peopleAdapter *PeopleAdapter) GetCustomerAdapter(companyID string) ([]dto.
 	rows, err := peopleAdapter.db.Query(query, companyID)
 
 	if err != nil {
-		fmt.Println(err.Error())
 		return customers, errors.New(errorDBGetCustomer)
 	}
 

@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/viictormg/fribeer-v2/internal/application/mapper"
 	"github.com/viictormg/fribeer-v2/internal/application/model"
@@ -26,10 +25,11 @@ func (saleUsecase *SaleUsecase) CreateSaleUsecase(sale model.CreateSaleModel, co
 		return dto.CreationDTO{}, err
 	}
 
-	trx, err = saleUsecase.saleService.CreateDetailSaleService(saleDetails, saleCreated.ID, trx)
+	saleDetails = mapper.MapProductsToSaleDetail(saleDetails, saleCreated.ID)
+
+	trx, err = saleUsecase.saleService.CreateDetailSaleService(saleDetails, trx)
 
 	if err != nil {
-		fmt.Println(err)
 		trx.Rollback()
 		trx.Commit()
 		return dto.CreationDTO{}, err

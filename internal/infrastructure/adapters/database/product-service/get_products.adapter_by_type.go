@@ -2,7 +2,6 @@ package adapters
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 )
@@ -27,7 +26,6 @@ func (productAdapter *ProductAdapter) GetProductsByTypeAdapter(typeProduct, comp
 	rows, err := productAdapter.db.Query(query, companyID, typeProduct)
 
 	if err != nil {
-		fmt.Println("error db products", err.Error())
 		return products, errors.New(errDBGetAllProducts)
 	}
 
