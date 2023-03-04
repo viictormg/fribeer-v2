@@ -12,5 +12,5 @@ type ProductCreateSaleModel struct {
 	ProductID   string  `json:"productID"`
 	InitialDate string  `json:"initialDate"`
 	EndDate     string  `json:"endDate"`
-	Quantity    float32 `json:"quantity"`
+	Quantity    float64 `json:"quantity"`
 }

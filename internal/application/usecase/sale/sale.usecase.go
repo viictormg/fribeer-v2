@@ -1,17 +1,13 @@
 package usecase
 
-import (
-	"github.com/viictormg/fribeer-v2/internal/application/model"
-	"github.com/viictormg/fribeer-v2/internal/domain/dto"
-)
+import "github.com/viictormg/fribeer-v2/internal/application/port"
 
 type SaleUsecase struct {
+	saleService port.ISaleService
 }
 
-func NewSaleUsecase() *SaleUsecase {
-	return &SaleUsecase{}
-}
-
-func (saleUsecase *SaleUsecase) CreateSaleUsecase(sale model.CreateSaleModel, companyID string) (dto.CreationDTO, error) {
-	return dto.CreationDTO{}, nil
+func NewSaleUsecase(saleService port.ISaleService) *SaleUsecase {
+	return &SaleUsecase{
+		saleService: saleService,
+	}
 }

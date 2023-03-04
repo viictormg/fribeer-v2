@@ -40,6 +40,7 @@ func NewServer(
 		UnitTimeHandler:     UnitTimeHandler,
 		TypeDocumentHandler: TypeDocumentHandler,
 		CustomerHandlers:    CustomerHandlers,
+		SaleHandlers:        SaleHandlers,
 	}
 }
 

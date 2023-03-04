@@ -10,4 +10,5 @@ type IProductAdapter interface {
 	CreateServiceAdapter(service entity.ProductEntity, companyID string) (dto.CreationDTO, error)
 	GetProductsAllAdapter(companyID string) ([]dto.ProductResponseGet, error)
 	GetProductsByTypeAdapter(typeProduct, companyID string) ([]dto.ProductResponseGet, error)
+	GetProductByIDAdapter(companyID, id string) (dto.ProductResponseGet, error)
 }

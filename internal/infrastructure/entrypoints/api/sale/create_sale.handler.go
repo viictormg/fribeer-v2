@@ -24,7 +24,16 @@ func (saleHandler *SaleHandler) CreateSaleHandler(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, response)
 	}
 
-	creation, _ := saleHandler.saleUsecase.CreateSaleUsecase(body, "")
+	creation, err := saleHandler.saleUsecase.CreateSaleUsecase(body, constants.CompanyIDTest)
+
+	if err != nil {
+		response := infradto.Response{
+			Success:   false,
+			Error:     []string{"pendiente definicion de error"},
+			Timestamp: time.Now(),
+		}
+		return c.JSON(http.StatusConflict, response)
+	}
 
 	response := infradto.Response{
 		Success:   true,

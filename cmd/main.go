@@ -29,6 +29,8 @@ import (
 	customerHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/customer"
 
 	saleUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/sale"
+	saleServices "github.com/viictormg/fribeer-v2/internal/domain/service/sale"
+	saleAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/sale"
 	saleHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/sale"
 
 	database "github.com/viictormg/fribeer-v2/internal/infrastructure/pkg/database"
@@ -44,9 +46,6 @@ func main() {
 	os.Setenv("NAME_DB", "FribeerDB")
 
 	db, _ := database.InitConnectionDB()
-
-	saleUsecase := saleUsecases.NewSaleUsecase()
-	saleHandler := saleHandlers.NewSaleHandler(saleUsecase)
 
 	productAdapter := productAdapters.NewProductAdapter(db)
 	productService := productServices.NewProductServie(productAdapter)
@@ -71,8 +70,12 @@ func main() {
 	peopleAdapter := peopleAdapters.NewPeopleAdapter(db)
 	peopleService := peopleServices.NewPeopleService(peopleAdapter)
 	customerUsecase := customerUsecases.NewCustomerUsecase(peopleService)
-
 	customerHandler := customerHandlers.NewCustomerHandler(customerUsecase)
+
+	saleAdapter := saleAdapters.NewSaleAdapter(db)
+	saleService := saleServices.NewSaleService(saleAdapter, productAdapter)
+	saleUsecase := saleUsecases.NewSaleUsecase(saleService)
+	saleHandler := saleHandlers.NewSaleHandler(saleUsecase)
 
 	srv := server.NewServer(
 		port,
