@@ -10,6 +10,7 @@ const (
 	MessageNotFound      = "registros no encontrados"
 	MessageFound         = "registros  encontrados"
 	CampusIDTest         = "94f9df9f-0fbd-11ed-9357-005056a6bad8"
+	DateFormatInvalid    = "the date format should be 'yyyy-mm-dd hh:mm:ss'"
 )
 
 var TypeProducts = map[string]string{

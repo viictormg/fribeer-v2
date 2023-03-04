@@ -1,6 +1,9 @@
 package model
 
-import validation "github.com/go-ozzo/ozzo-validation"
+import (
+	validation "github.com/go-ozzo/ozzo-validation"
+	"github.com/viictormg/fribeer-v2/internal/domain/constants"
+)
 
 type CreateSaleModel struct {
 	CustomerID string                   `json:"customerID"`
@@ -19,6 +22,6 @@ type ProductCreateSaleModel struct {
 
 func (s CreateSaleModel) Validate() error {
 	return validation.ValidateStruct(&s,
-		validation.Field(&s.SaleDate, validation.Date("2006-01-02 15:04:05")),
+		validation.Field(&s.SaleDate, validation.Date("2006-01-02 15:04:05").Error(constants.DateFormatInvalid)),
 	)
 }
