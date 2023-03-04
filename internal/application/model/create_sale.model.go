@@ -23,5 +23,6 @@ type ProductCreateSaleModel struct {
 func (s CreateSaleModel) Validate() error {
 	return validation.ValidateStruct(&s,
 		validation.Field(&s.SaleDate, validation.Date("2006-01-02 15:04:05").Error(constants.DateFormatInvalid)),
+		// validation.Field(&s.Products, validation.Each(validation.Date("2006-01-02 15:04:05").Error(constants.DateFormatInvalid))),
 	)
 }

@@ -10,7 +10,7 @@ import (
 )
 
 func (saleUsecase *SaleUsecase) CreateSaleUsecase(sale model.CreateSaleModel, companyID, campus string) (dto.CreationDTO, error) {
-	_, total, err := saleUsecase.saleService.GetDetailProductsService(sale.Products, companyID)
+	saleDetails, total, err := saleUsecase.saleService.GetDetailProductsService(sale.Products, companyID)
 	if err != nil {
 		return dto.CreationDTO{}, err
 	}
@@ -21,12 +21,21 @@ func (saleUsecase *SaleUsecase) CreateSaleUsecase(sale model.CreateSaleModel, co
 	saleCreated, trx, err := saleUsecase.saleService.CreateSaleService(saleEntity, ctx)
 
 	if err != nil {
+		trx.Rollback()
+		trx.Commit()
+		return dto.CreationDTO{}, err
+	}
+
+	trx, err = saleUsecase.saleService.CreateDetailSaleService(saleDetails, saleCreated.ID, trx)
+
+	if err != nil {
 		fmt.Println(err)
 		trx.Rollback()
 		trx.Commit()
 		return dto.CreationDTO{}, err
 
 	}
+
 	trx.Commit()
 
 	return saleCreated, nil

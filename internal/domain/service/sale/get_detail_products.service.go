@@ -21,8 +21,7 @@ func (saleService *SaleService) GetDetailProductsService(products []model.Produc
 		}
 
 		productDetail := entity.SaleDetailEntity{
-			ID:       p.ID,
-			Product:  p.Name,
+			Product:  p.ID,
 			Price:    p.Price,
 			Quantity: product.Quantity,
 			Subtotal: p.Price * product.Quantity,

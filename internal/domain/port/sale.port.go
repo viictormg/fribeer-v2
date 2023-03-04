@@ -10,5 +10,5 @@ import (
 
 type ISaleAdapter interface {
 	CreateSaleAdapter(sale entity.SaleCreationEntity, ctx context.Context) (dto.CreationDTO, *sql.Tx, error)
-	// CreateSaleDetailAdapter(sale entity.SaleDetailEntity, ctx context.Context) (*sql.Tx, error)
+	CreateDetailSaleAdapter(sale entity.SaleDetailEntity, trx *sql.Tx) (*sql.Tx, error)
 }
