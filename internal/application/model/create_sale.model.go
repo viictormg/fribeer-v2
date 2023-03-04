@@ -1,5 +1,7 @@
 package model
 
+import validation "github.com/go-ozzo/ozzo-validation"
+
 type CreateSaleModel struct {
 	CustomerID string                   `json:"customerID"`
 	State      string                   `json:"state"`
@@ -13,4 +15,10 @@ type ProductCreateSaleModel struct {
 	InitialDate string  `json:"initialDate"`
 	EndDate     string  `json:"endDate"`
 	Quantity    float64 `json:"quantity"`
+}
+
+func (s CreateSaleModel) Validate() error {
+	return validation.ValidateStruct(&s,
+		validation.Field(&s.SaleDate, validation.Date("2006-01-02 15:04:05")),
+	)
 }

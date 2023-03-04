@@ -9,9 +9,16 @@ const (
 	MessageErrorFind     = "error al consultar"
 	MessageNotFound      = "registros no encontrados"
 	MessageFound         = "registros  encontrados"
+	CampusIDTest         = "94f9df9f-0fbd-11ed-9357-005056a6bad8"
 )
 
 var TypeProducts = map[string]string{
 	"PROD": "Producto",
 	"SERV": "Servicio",
+}
+
+var StateSaleConstant = map[string]string{
+	"PENDIENTE_DE_PAGO": "6a21bb1c-2b48-11ed-860e-005056a61a3a",
+	"BORRADOR":          "9d1b5176-2b48-11ed-860e-005056a61a3a",
+	"PAGADA":            "fa78d8ea-2b47-11ed-860e-005056a61a3a",
 }

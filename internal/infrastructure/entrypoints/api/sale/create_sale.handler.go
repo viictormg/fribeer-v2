@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -13,6 +14,7 @@ import (
 func (saleHandler *SaleHandler) CreateSaleHandler(c echo.Context) error {
 	var body model.CreateSaleModel
 
+	fmt.Println(time.Now())
 	err := c.Bind(&body)
 
 	if err != nil {
@@ -24,7 +26,7 @@ func (saleHandler *SaleHandler) CreateSaleHandler(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, response)
 	}
 
-	creation, err := saleHandler.saleUsecase.CreateSaleUsecase(body, constants.CompanyIDTest)
+	creation, err := saleHandler.saleUsecase.CreateSaleUsecase(body, constants.CompanyIDTest, constants.CampusIDTest)
 
 	if err != nil {
 		response := infradto.Response{

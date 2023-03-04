@@ -9,7 +9,7 @@ import (
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 )
 
-func (saleUsecase *SaleUsecase) CreateSaleUsecase(sale model.CreateSaleModel, companyID string) (dto.CreationDTO, error) {
+func (saleUsecase *SaleUsecase) CreateSaleUsecase(sale model.CreateSaleModel, companyID, campus string) (dto.CreationDTO, error) {
 	_, total, err := saleUsecase.saleService.GetDetailProductsService(sale.Products, companyID)
 	if err != nil {
 		return dto.CreationDTO{}, err
@@ -21,7 +21,7 @@ func (saleUsecase *SaleUsecase) CreateSaleUsecase(sale model.CreateSaleModel, co
 	// validar
 	// validar detalle
 
-	saleEntity := mapper.MappSaleModelToSaleEntity(sale, total, companyID)
+	saleEntity := mapper.MappSaleModelToSaleEntity(sale, total, companyID, campus)
 	saleCreated, trx, err := saleUsecase.saleService.CreateSaleService(saleEntity, ctx)
 
 	if err != nil {

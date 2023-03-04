@@ -16,9 +16,6 @@ func (saleAdapter *SaleAdapter) CreateSaleAdapter(sale entity.SaleCreationEntity
 	if err != nil {
 		return dto.CreationDTO{}, trx, err
 	}
-	sale.SaleDate = "2023-03-04 03:15:01.000000"
-	sale.State = "1b030e37-2b49-11ed-860e-005056a61a3a"
-	sale.Campus = "94f9df9f-0fbd-11ed-9357-005056a6bad8"
 
 	query := `INSERT INTO Sale (id, customer, saleDate, total, observations, state, campus, company, isActive) 
 				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
