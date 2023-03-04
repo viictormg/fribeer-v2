@@ -65,6 +65,7 @@ func (s *Server) RunServer() {
 	apiPulic.GET("/customer", s.CustomerHandlers.GetCustomerHandler)
 
 	apiPulic.POST("/sale", s.SaleHandlers.CreateSaleHandler)
+	apiPulic.GET("/sale", s.SaleHandlers.GetSalesHandler)
 
 	err := e.Start(":" + s.Port)
 	if err != nil {
