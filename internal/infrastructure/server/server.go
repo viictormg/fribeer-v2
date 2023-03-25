@@ -5,6 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	authHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/auth"
 	customerHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/customer"
 	measureHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/measure_unit"
 	productHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/product"
@@ -21,6 +22,7 @@ type Server struct {
 	TypeDocumentHandler typeDocumentHandlers.TypeDocumentHandler
 	CustomerHandlers    customerHandlers.CustomerHandler
 	SaleHandlers        saleHandlers.SaleHandler
+	authHandler         authHandlers.AuthHandler
 }
 
 func NewServer(
@@ -31,6 +33,7 @@ func NewServer(
 	TypeDocumentHandler typeDocumentHandlers.TypeDocumentHandler,
 	CustomerHandlers customerHandlers.CustomerHandler,
 	SaleHandlers saleHandlers.SaleHandler,
+	authHandler authHandlers.AuthHandler,
 
 ) *Server {
 	return &Server{
@@ -41,6 +44,7 @@ func NewServer(
 		TypeDocumentHandler: TypeDocumentHandler,
 		CustomerHandlers:    CustomerHandlers,
 		SaleHandlers:        SaleHandlers,
+		authHandler:         authHandler,
 	}
 }
 
@@ -66,6 +70,8 @@ func (s *Server) RunServer() {
 
 	apiPulic.POST("/sale", s.SaleHandlers.CreateSaleHandler)
 	apiPulic.GET("/sale", s.SaleHandlers.GetSalesHandler)
+
+	apiPulic.POST("/login", s.authHandler.Login)
 
 	err := e.Start(":" + s.Port)
 	if err != nil {

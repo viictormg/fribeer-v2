@@ -31,6 +31,7 @@ import (
 	saleUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/sale"
 	saleServices "github.com/viictormg/fribeer-v2/internal/domain/service/sale"
 	saleAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/sale"
+	authHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/auth"
 	saleHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/sale"
 
 	database "github.com/viictormg/fribeer-v2/internal/infrastructure/pkg/database"
@@ -76,6 +77,7 @@ func main() {
 	saleService := saleServices.NewSaleService(saleAdapter, productAdapter)
 	saleUsecase := saleUsecases.NewSaleUsecase(saleService)
 	saleHandler := saleHandlers.NewSaleHandler(saleUsecase)
+	authHandler := authHandlers.NewAuthHandler()
 
 	srv := server.NewServer(
 		port,
@@ -85,6 +87,7 @@ func main() {
 		*typeDocumentHandler,
 		*customerHandler,
 		*saleHandler,
+		*authHandler,
 	)
 
 	srv.RunServer()
