@@ -1,7 +1,5 @@
 package entity
 
-import "time"
-
 type PeopleEntity struct {
 	ID             string
 	TypePeople     string
@@ -11,7 +9,7 @@ type PeopleEntity struct {
 	LastSurname    string
 	TypeDocument   string
 	DocumentNumber string
-	Birthdate      time.Time
+	Birthdate      string
 	Phone          string
 	Address        string
 	Email          string
