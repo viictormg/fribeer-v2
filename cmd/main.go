@@ -3,6 +3,9 @@ package main
 import (
 	"os"
 
+	accountServices "github.com/viictormg/fribeer-v2/internal/domain/service/account"
+	accountAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/account"
+
 	productUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/product-service"
 	productServices "github.com/viictormg/fribeer-v2/internal/domain/service/product-service"
 	productAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/product-service"
@@ -31,8 +34,12 @@ import (
 	saleUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/sale"
 	saleServices "github.com/viictormg/fribeer-v2/internal/domain/service/sale"
 	saleAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/sale"
-	authHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/auth"
+
 	saleHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/sale"
+
+	AuthUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/auth"
+
+	authHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/auth"
 
 	database "github.com/viictormg/fribeer-v2/internal/infrastructure/pkg/database"
 	"github.com/viictormg/fribeer-v2/internal/infrastructure/server"
@@ -47,6 +54,10 @@ func main() {
 	os.Setenv("NAME_DB", "FribeerDB")
 
 	db, _ := database.InitConnectionDB()
+
+	accountAdapter := accountAdapters.NewAccountAdapter(db)
+
+	accountService := accountServices.NewAccountService(accountAdapter)
 
 	productAdapter := productAdapters.NewProductAdapter(db)
 	productService := productServices.NewProductServie(productAdapter)
@@ -77,7 +88,9 @@ func main() {
 	saleService := saleServices.NewSaleService(saleAdapter, productAdapter)
 	saleUsecase := saleUsecases.NewSaleUsecase(saleService)
 	saleHandler := saleHandlers.NewSaleHandler(saleUsecase)
-	authHandler := authHandlers.NewAuthHandler()
+
+	AuthUsecase := AuthUsecases.NewAuthUsecase(accountService)
+	authHandler := authHandlers.NewAuthHandler(AuthUsecase)
 
 	srv := server.NewServer(
 		port,

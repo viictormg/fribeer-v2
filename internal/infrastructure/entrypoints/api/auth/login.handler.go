@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -10,7 +11,7 @@ import (
 	infradto "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api"
 )
 
-func (authHandler *AuthHandler) Login(c echo.Context) error {
+func (authHandler *AuthHandler) LoginHandler(c echo.Context) error {
 	var login model.LoginModel
 
 	err := c.Bind(&login)
@@ -35,5 +36,25 @@ func (authHandler *AuthHandler) Login(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, response)
 	}
 
-	return nil
+	token, err := authHandler.loginUsecase.LoginUsecase(login.User, login.Password)
+
+	fmt.Println(token)
+
+	if err != nil {
+		response := infradto.Response{
+			Success:   false,
+			Message:   "usuario no encontrado",
+			Timestamp: time.Now(),
+		}
+		return c.JSON(http.StatusBadRequest, response)
+	}
+
+	response := infradto.Response{
+		Success:   true,
+		Message:   "login exitoso",
+		Timestamp: time.Now(),
+		Data:      token,
+	}
+	return c.JSON(http.StatusOK, response)
+
 }
