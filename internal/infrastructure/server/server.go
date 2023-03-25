@@ -49,6 +49,13 @@ func NewServer(
 }
 
 func (s *Server) RunServer() {
+	// config := echojwt.Config{
+	// 	NewClaimsFunc: func(c echo.Context) jwt.Claims {
+	// 		return new(dto.CustomClaims)
+	// 	},
+	// 	SigningKey: []byte("secret"),
+	// }
+
 	e := echo.New()
 
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
@@ -56,7 +63,20 @@ func (s *Server) RunServer() {
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
 
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+
 	apiPulic := e.Group("/api")
+	// config := echojwt.Config{
+	// 	NewClaimsFunc: func(c echo.Context) jwt.Claims {
+	// 		return new(dto.CustomClaims)
+	// 	},
+	// 	SigningKey: []byte("secret"),
+	// }
+
+	// e.Use(echojwt.WithConfig(config))
+	e.GET("", s.authHandler.TestJWT)
+
 	apiPulic.POST("/product", s.ProductHandler.CreateProductHandler)
 	apiPulic.GET("/product", s.ProductHandler.GetProductsHandler)
 

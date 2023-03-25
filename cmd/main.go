@@ -1,8 +1,10 @@
 package main
 
 import (
+	"log"
 	"os"
 
+	"github.com/joho/godotenv"
 	accountServices "github.com/viictormg/fribeer-v2/internal/domain/service/account"
 	accountAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/account"
 
@@ -46,12 +48,12 @@ import (
 )
 
 func main() {
-	port := "4000"
 
-	os.Setenv("USER_DB", "root")
-	os.Setenv("PASSWORD_DB", "")
-	os.Setenv("HOST_DB", "127.0.0.1")
-	os.Setenv("NAME_DB", "FribeerDB")
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	port := os.Getenv("PORT")
 
 	db, _ := database.InitConnectionDB()
 

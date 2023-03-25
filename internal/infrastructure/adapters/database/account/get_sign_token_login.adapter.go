@@ -1,6 +1,9 @@
 package adapters
 
-import "github.com/viictormg/fribeer-v2/internal/domain/dto"
+import (
+	"github.com/sirupsen/logrus"
+	"github.com/viictormg/fribeer-v2/internal/domain/dto"
+)
 
 func (accountAdapter *AccountAdapter) GetSignTokenLoginAdapter(user, password string) (dto.SignTokenDTO, error) {
 	var signToken dto.SignTokenDTO
@@ -16,6 +19,7 @@ func (accountAdapter *AccountAdapter) GetSignTokenLoginAdapter(user, password st
 		&signToken.CompanyID,
 	)
 	if err != nil {
+		logrus.Error(err)
 		return signToken, err
 	}
 

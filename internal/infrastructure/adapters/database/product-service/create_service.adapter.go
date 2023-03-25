@@ -13,6 +13,14 @@ const errorCreateServiceDataBase = "error create service database"
 func (productAdapter *ProductAdapter) CreateServiceAdapter(product entity.ProductEntity, companyID string) (dto.CreationDTO, error) {
 	id := uuid.NewString()
 
+	var unitTime interface{}
+
+	if product.UnitTime == "" {
+		unitTime = nil
+	} else {
+		unitTime = product.UnitTime
+	}
+
 	query := `INSERT INTO 
 				Product (id, name, description, price, cost, isFrequency, unitTime, duration, typeProduct, company) 
 				VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
@@ -25,7 +33,7 @@ func (productAdapter *ProductAdapter) CreateServiceAdapter(product entity.Produc
 		product.Price,
 		product.Cost,
 		product.IsFrequency,
-		product.UnitTime,
+		unitTime,
 		product.Duration,
 		product.TypeProduct,
 		companyID,
