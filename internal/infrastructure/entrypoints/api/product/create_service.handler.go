@@ -18,6 +18,7 @@ func (productHandler *ProductHandler) CreateServiceHandler(c echo.Context) error
 	if err != nil {
 		response := infradto.Response{
 			Success:   false,
+			Message:   constants.ErrorDecodeBody,
 			Error:     []string{constants.ErrorDecodeBody},
 			Timestamp: time.Now(),
 		}
@@ -28,6 +29,7 @@ func (productHandler *ProductHandler) CreateServiceHandler(c echo.Context) error
 	if len(errValidation) > 0 {
 		response := infradto.Response{
 			Success:   false,
+			Message:   constants.MessageErrorCreate,
 			Error:     errValidation,
 			Timestamp: time.Now(),
 		}
@@ -38,6 +40,7 @@ func (productHandler *ProductHandler) CreateServiceHandler(c echo.Context) error
 	if err != nil {
 		response := infradto.Response{
 			Success:   false,
+			Message:   constants.MessageErrorCreate,
 			Error:     []string{err.Error()},
 			Timestamp: time.Now(),
 		}
@@ -47,6 +50,7 @@ func (productHandler *ProductHandler) CreateServiceHandler(c echo.Context) error
 
 	response := infradto.Response{
 		Success:   true,
+		Message:   constants.MessageCreate,
 		Data:      creation,
 		Timestamp: time.Now(),
 	}
