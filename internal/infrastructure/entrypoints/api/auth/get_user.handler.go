@@ -1,26 +1,34 @@
 package api
 
 import (
-	"encoding/base64"
-	"encoding/json"
-	"fmt"
-	"strings"
+	"net/http"
+	"time"
 
 	"github.com/labstack/echo/v4"
-	"github.com/viictormg/fribeer-v2/internal/domain/dto"
+	"github.com/viictormg/fribeer-v2/internal/domain/constants"
+	infradto "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api"
+	"github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/utils"
 )
 
 func (authHandler *AuthHandler) GetUserHandler(c echo.Context) error {
 	// fmt.Println(claims.SignTokenDTO.CompanyID)
+	payload := utils.GetClaimsToken(c)
 
-	token := strings.Split(c.Request().Header.Get("Authorization"), ".")
-	rawDecodedText, _ := base64.StdEncoding.DecodeString(token[1])
+	user, err := authHandler.loginUsecase.GetUserUsecase(payload)
 
-	var claims dto.CustomClaims
+	if err != nil {
+		response := infradto.Response{
+			Success:   false,
+			Message:   "error obteniendo usuario",
+			Timestamp: time.Now(),
+		}
+		return c.JSON(http.StatusConflict, response)
+	}
+	response := infradto.Response{
+		Success: true,
+		Message: constants.MessageFoundSingular,
+		Data:    user,
+	}
 
-	json.Unmarshal(rawDecodedText, &claims)
-
-	fmt.Println(claims.SignTokenDTO.CompanyID)
-
-	return nil
+	return c.JSON(http.StatusOK, response)
 }

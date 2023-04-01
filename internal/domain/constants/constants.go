@@ -8,7 +8,8 @@ const (
 	MessageErrorCreate   = "error al guardar"
 	MessageErrorFind     = "error al consultar"
 	MessageNotFound      = "registros no encontrados"
-	MessageFound         = "registros  encontrados"
+	MessageFound         = "registros encontrados"
+	MessageFoundSingular = "registro encontrado"
 	CampusIDTest         = "94f9df9f-0fbd-11ed-9357-005056a6bad8"
 	DateFormatInvalid    = "the date format should be 'yyyy-mm-dd hh:mm:ss'"
 )
