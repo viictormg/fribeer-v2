@@ -80,8 +80,8 @@ func (s *Server) RunServer() {
 
 	apiPrivate.GET("/getUser", s.authHandler.GetUserHandler)
 
-	apiPulic.POST("/product", s.ProductHandler.CreateProductHandler)
-	apiPulic.GET("/product", s.ProductHandler.GetProductsHandler)
+	apiPrivate.POST("/product", s.ProductHandler.CreateProductHandler)
+	apiPrivate.GET("/product", s.ProductHandler.GetProductsHandler)
 
 	apiPulic.POST("/service", s.ProductHandler.CreateServiceHandler)
 	apiPulic.GET("/measureUnit", s.MeasuerUnitHandler.GetMeasureUnitHandler)
