@@ -36,13 +36,13 @@ func (authUsecase *AuthUsecase) hashPassword(password string) string {
 }
 
 func (authUsecase *AuthUsecase) signToken(signToken dto.SignTokenDTO) string {
-	expireTime := time.Now().Add(TIME_EXPIRED_TOKEN)
+	// expireTime := time.Now().Add(TIME_EXPIRED_TOKEN)
 
 	claims := dto.CustomClaims{
 		SignTokenDTO: signToken,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Unix(expireTime.Unix(), 0)),
-			Issuer:    "system",
+			// ExpiresAt: jwt.NewNumericDate(time.Unix(expireTime.Unix(), 0)),
+			Issuer: "system",
 		},
 	}
 
@@ -50,7 +50,7 @@ func (authUsecase *AuthUsecase) signToken(signToken dto.SignTokenDTO) string {
 	// tokenString, _ := token.SignedString([]byte("todoesculpadelabareta"))
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, _ := token.SignedString([]byte("secret"))
+	tokenString, _ := token.SignedString([]byte(os.Getenv("SECRET_PASSWORD")))
 
 	return tokenString
 }

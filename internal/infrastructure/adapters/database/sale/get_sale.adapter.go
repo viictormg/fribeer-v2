@@ -1,8 +1,6 @@
 package adapters
 
 import (
-	"fmt"
-
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 )
 
@@ -39,8 +37,6 @@ func (saleAdapter *SaleAdapter) GetSalesAdapter(companyID, campus string) ([]dto
 
 		sales = append(sales, sale)
 	}
-
-	fmt.Println(sales)
 
 	return sales, nil
 
