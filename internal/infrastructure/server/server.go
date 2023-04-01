@@ -62,11 +62,6 @@ func (s *Server) RunServer() {
 	apiPulic := e.Group("/api")
 	apiPrivate := e.Group("/api")
 
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"*"},
-		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
-	}))
-
 	config := echojwt.Config{
 		NewClaimsFunc: func(c echo.Context) jwt.Claims {
 			return new(dto.CustomClaims)
@@ -75,6 +70,10 @@ func (s *Server) RunServer() {
 	}
 
 	// e.Use(echojwt.WithConfig(config))
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	}))
 
 	apiPrivate.Use(echojwt.WithConfig(config))
 	apiPrivate.GET("/test-auth", s.authHandler.TestJWT)
