@@ -2,9 +2,13 @@ package server
 
 import (
 	"log"
+	"os"
 
+	"github.com/golang-jwt/jwt/v4"
+	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 	authHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/auth"
 	customerHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/customer"
 	measureHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/measure_unit"
@@ -49,33 +53,33 @@ func NewServer(
 }
 
 func (s *Server) RunServer() {
-	// config := echojwt.Config{
-	// 	NewClaimsFunc: func(c echo.Context) jwt.Claims {
-	// 		return new(dto.CustomClaims)
-	// 	},
-	// 	SigningKey: []byte("secret"),
-	// }
 
 	e := echo.New()
+
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+
+	apiPulic := e.Group("/api")
+	apiPrivate := e.Group("/api")
 
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
 
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
-
-	apiPulic := e.Group("/api")
-	// config := echojwt.Config{
-	// 	NewClaimsFunc: func(c echo.Context) jwt.Claims {
-	// 		return new(dto.CustomClaims)
-	// 	},
-	// 	SigningKey: []byte("secret"),
-	// }
+	config := echojwt.Config{
+		NewClaimsFunc: func(c echo.Context) jwt.Claims {
+			return new(dto.CustomClaims)
+		},
+		SigningKey: []byte(os.Getenv("SECRET_PASSWORD")),
+	}
 
 	// e.Use(echojwt.WithConfig(config))
-	e.GET("", s.authHandler.TestJWT)
+
+	apiPrivate.Use(echojwt.WithConfig(config))
+	apiPrivate.GET("/test-auth", s.authHandler.TestJWT)
+
+	apiPrivate.GET("/getUser", s.authHandler.GetUserHandler)
 
 	apiPulic.POST("/product", s.ProductHandler.CreateProductHandler)
 	apiPulic.GET("/product", s.ProductHandler.GetProductsHandler)
