@@ -4,4 +4,5 @@ import "github.com/viictormg/fribeer-v2/internal/domain/dto"
 
 type IAccountAdapter interface {
 	GetSignTokenLoginAdapter(user, password string) (dto.SignTokenDTO, error)
+	GetUserAdapter(AccountID string) (dto.GetUserDTO, error)
 }

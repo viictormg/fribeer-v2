@@ -35,6 +35,7 @@ import (
 
 	saleUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/sale"
 	saleServices "github.com/viictormg/fribeer-v2/internal/domain/service/sale"
+	campusAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/campus"
 	saleAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/sale"
 
 	saleHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/sale"
@@ -42,7 +43,7 @@ import (
 	AuthUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/auth"
 	authHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/auth"
 
-	campusService "github.com/viictormg/fribeer-v2/internal/domain/service/campus"
+	campusServices "github.com/viictormg/fribeer-v2/internal/domain/service/campus"
 
 	database "github.com/viictormg/fribeer-v2/internal/infrastructure/pkg/database"
 	"github.com/viictormg/fribeer-v2/internal/infrastructure/server"
@@ -92,9 +93,10 @@ func main() {
 	saleUsecase := saleUsecases.NewSaleUsecase(saleService)
 	saleHandler := saleHandlers.NewSaleHandler(saleUsecase)
 
-	campuseServ := campusService.NewCampusService()
+	campusAdapter := campusAdapters.NewCampusAdapter(db)
+	campuseService := campusServices.NewCampusService(campusAdapter)
 
-	AuthUsecase := AuthUsecases.NewAuthUsecase(accountService, campuseServ)
+	AuthUsecase := AuthUsecases.NewAuthUsecase(accountService, campuseService)
 	authHandler := authHandlers.NewAuthHandler(AuthUsecase)
 
 	srv := server.NewServer(

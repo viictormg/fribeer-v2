@@ -3,7 +3,7 @@ package usecase
 import "github.com/viictormg/fribeer-v2/internal/domain/dto"
 
 func (authUsecase *AuthUsecase) GetUserUsecase(payload dto.SignTokenDTO) (dto.GetUserDTO, error) {
-	user, err := authUsecase.accountService.GetUserService(payload.AccountID, payload.PeopleID)
+	user, err := authUsecase.accountService.GetUserService(payload.AccountID)
 
 	if err != nil {
 		return dto.GetUserDTO{}, err
@@ -13,7 +13,6 @@ func (authUsecase *AuthUsecase) GetUserUsecase(payload dto.SignTokenDTO) (dto.Ge
 
 	if err != nil {
 		return dto.GetUserDTO{}, err
-
 	}
 	user.Campus = c
 	return user, nil
