@@ -17,5 +17,5 @@ func (s *ServiceCardSerivice) CreateServiceCardService(cards []entity.ServiceCar
 		}
 	}
 
-	return nil, nil
+	return trx, nil
 }

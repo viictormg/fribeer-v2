@@ -14,10 +14,10 @@ type CreateSaleModel struct {
 }
 
 type ProductCreateSaleModel struct {
-	ProductID   string  `json:"productID"`
-	InitialDate string  `json:"initialDate"`
-	EndDate     string  `json:"endDate"`
-	Quantity    float64 `json:"quantity"`
+	ProductID string  `json:"productID"`
+	StartDate string  `json:"startDate"`
+	EndDate   string  `json:"endDate"`
+	Quantity  float64 `json:"quantity"`
 }
 
 func (s CreateSaleModel) Validate() error {

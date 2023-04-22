@@ -2,7 +2,6 @@ package usecase
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/sirupsen/logrus"
 	"github.com/viictormg/fribeer-v2/internal/application/mapper"
@@ -26,7 +25,6 @@ func (saleUsecase *SaleUsecase) CreateSaleUsecase(sale model.CreateSaleModel, co
 	saleCreated, trx, err := saleUsecase.saleService.CreateSaleService(saleEntity, ctx)
 
 	if err != nil {
-		logrus.Error(err)
 
 		trx.Rollback()
 		trx.Commit()
@@ -44,20 +42,18 @@ func (saleUsecase *SaleUsecase) CreateSaleUsecase(sale model.CreateSaleModel, co
 		return dto.CreationDTO{}, err
 	}
 
-	cardsSerivces := mapper.MapperCreateCardService(saleDetails)
+	cardsSerivces := mapper.MapperCreateCardService(saleDetails, saleEntity.Customer, saleCreated.ID, companyID)
 
 	if len(cardsSerivces) > 0 {
 		trx, err = saleUsecase.serviceCard.CreateServiceCardService(cardsSerivces, trx)
 		if err != nil {
-			logrus.Error(err)
+			logrus.Error("CARDDDDDD", err)
 
 			trx.Rollback()
 			trx.Commit()
 			return dto.CreationDTO{}, err
 		}
 	}
-
-	fmt.Println(cardsSerivces)
 
 	//Creacion de tarjetas de servicio
 

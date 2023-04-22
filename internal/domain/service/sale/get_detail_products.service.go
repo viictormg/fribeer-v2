@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 
+	"github.com/google/uuid"
 	"github.com/viictormg/fribeer-v2/internal/application/model"
 	"github.com/viictormg/fribeer-v2/internal/domain/constants"
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
@@ -19,13 +20,16 @@ func (saleService *SaleService) GetDetailProductsService(products []model.Produc
 		}
 
 		productDetail := dto.DetailProductToCreateSale{
-			ID:          p.ID,
+			ID:          uuid.NewString(),
+			ProductID:   p.ID,
 			Price:       p.Price,
 			Name:        p.Description,
 			Quantity:    product.Quantity,
 			Subtotal:    p.Price * product.Quantity,
 			TypeProduct: p.TypeProduct,
 			IsFrequency: p.IsFrequency,
+			StartDate:   product.StartDate,
+			EndDate:     product.EndDate,
 			// Discount:    product.,
 		}
 		total += productDetail.Subtotal

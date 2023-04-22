@@ -1,15 +1,11 @@
 package adapters
 
 import (
-	"fmt"
-
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 )
 
 func (c *CampusAdapter) GetCampusAdapter(companyID string) ([]dto.GetCampusDTO, error) {
 	campus := []dto.GetCampusDTO{}
-
-	fmt.Println(companyID)
 
 	const query = `SELECT id, name FROM Campus WHERE company = ? `
 

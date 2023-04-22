@@ -2,6 +2,7 @@ package dto
 
 type DetailProductToCreateSale struct {
 	ID            string  `json:"id"`
+	ProductID     string  `json:"productID"`
 	Name          string  `json:"name"`
 	TypeProduct   string  `json:"typeProduct"`
 	Quantity      float64 `json:"quantity"`
@@ -14,4 +15,6 @@ type DetailProductToCreateSale struct {
 	Subtotal      float64 `json:"subtotal"`
 	Discount      float64 `json:"discount"`
 	Observations  string  `json:"observations"`
+	StartDate     string  `json:"startDate"`
+	EndDate       string  `json:"endtDate"`
 }

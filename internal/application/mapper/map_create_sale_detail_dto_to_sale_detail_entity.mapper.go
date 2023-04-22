@@ -1,7 +1,6 @@
 package mapper
 
 import (
-	"github.com/google/uuid"
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 	"github.com/viictormg/fribeer-v2/internal/domain/entity"
 )
@@ -11,8 +10,8 @@ func MapProductsToSaleDetail(producs []dto.DetailProductToCreateSale, saleID str
 
 	for _, d := range producs {
 		detail := entity.SaleDetailEntity{
-			ID:           uuid.NewString(),
-			Product:      d.ID,
+			ID:           d.ID,
+			Product:      d.ProductID,
 			Sale:         saleID,
 			Price:        d.Price,
 			Quantity:     d.Quantity,
