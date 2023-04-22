@@ -5,25 +5,28 @@ import (
 
 	"github.com/viictormg/fribeer-v2/internal/application/model"
 	"github.com/viictormg/fribeer-v2/internal/domain/constants"
-	"github.com/viictormg/fribeer-v2/internal/domain/entity"
+	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 )
 
-func (saleService *SaleService) GetDetailProductsService(products []model.ProductCreateSaleModel, companyID string) ([]entity.SaleDetailEntity, float64, error) {
-	var productsDetail []entity.SaleDetailEntity
+func (saleService *SaleService) GetDetailProductsService(products []model.ProductCreateSaleModel, companyID string) ([]dto.DetailProductToCreateSale, float64, error) {
+	var productsDetail []dto.DetailProductToCreateSale
 	var total float64
 
 	for _, product := range products {
 		p, err := saleService.productAdapter.GetProductByIDAdapter(product.ProductID, companyID)
 		if err != nil {
-			return []entity.SaleDetailEntity{}, 0, errors.New(constants.MessageNotFound)
+			return []dto.DetailProductToCreateSale{}, 0, errors.New(constants.MessageNotFound)
 		}
 
-		productDetail := entity.SaleDetailEntity{
-			Product:  p.ID,
-			Price:    p.Price,
-			Quantity: product.Quantity,
-			Subtotal: p.Price * product.Quantity,
-			Company:  companyID,
+		productDetail := dto.DetailProductToCreateSale{
+			ID:          p.ID,
+			Price:       p.Price,
+			Name:        p.Description,
+			Quantity:    product.Quantity,
+			Subtotal:    p.Price * product.Quantity,
+			TypeProduct: p.TypeProduct,
+			IsFrequency: p.IsFrequency,
+			// Discount:    product.,
 		}
 		total += productDetail.Subtotal
 		productsDetail = append(productsDetail, productDetail)

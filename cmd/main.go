@@ -35,6 +35,9 @@ import (
 
 	saleUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/sale"
 	saleServices "github.com/viictormg/fribeer-v2/internal/domain/service/sale"
+	serviceCardServices "github.com/viictormg/fribeer-v2/internal/domain/service/service_card"
+	serviceCardAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/service_card"
+
 	campusAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/campus"
 	saleAdapters "github.com/viictormg/fribeer-v2/internal/infrastructure/adapters/database/sale"
 
@@ -88,9 +91,13 @@ func main() {
 	customerUsecase := customerUsecases.NewCustomerUsecase(peopleService)
 	customerHandler := customerHandlers.NewCustomerHandler(customerUsecase)
 
+	serviceCardAdapter := serviceCardAdapters.NewServiceCardAdapter(db)
+
+	serviceCardService := serviceCardServices.NewServiceCardSerivice(serviceCardAdapter)
+
 	saleAdapter := saleAdapters.NewSaleAdapter(db)
 	saleService := saleServices.NewSaleService(saleAdapter, productAdapter)
-	saleUsecase := saleUsecases.NewSaleUsecase(saleService)
+	saleUsecase := saleUsecases.NewSaleUsecase(saleService, serviceCardService)
 	saleHandler := saleHandlers.NewSaleHandler(saleUsecase)
 
 	campusAdapter := campusAdapters.NewCampusAdapter(db)

@@ -11,4 +11,5 @@ type SaleDetailEntity struct {
 	Observations string
 	Company      string
 	IsActive     bool
+	TypeProduct  string
 }

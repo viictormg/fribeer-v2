@@ -12,6 +12,7 @@ const (
 	MessageFoundSingular = "registro encontrado"
 	CampusIDTest         = "94f9df9f-0fbd-11ed-9357-005056a6bad8"
 	DateFormatInvalid    = "the date format should be 'yyyy-mm-dd hh:mm:ss'"
+	TypeProductService   = "Servicio"
 )
 
 var TypeProducts = map[string]string{
