@@ -18,6 +18,8 @@ type ProductCreateSaleModel struct {
 	StartDate string  `json:"startDate"`
 	EndDate   string  `json:"endDate"`
 	Quantity  float64 `json:"quantity"`
+	Price     float64 `json:"price"`
+	Discount  float64 `json:"discount"`
 }
 
 func (s CreateSaleModel) Validate() error {

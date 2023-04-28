@@ -5,7 +5,7 @@ import "github.com/viictormg/fribeer-v2/internal/domain/dto"
 func (unitTimeAdapter *UnitTimeAdapter) GetUnitTimeAdapter() ([]dto.UnitTimeDTO, error) {
 	var unitTimes []dto.UnitTimeDTO
 
-	const query = `SELECT id, frequency, description,  IF(isActive = 1, true, false) FROM UnitTime`
+	const query = `SELECT id, frequency, description,  IF(isActive = 1, true, false), code, singular, plural FROM UnitTime;`
 
 	rows, err := unitTimeAdapter.db.Query(query)
 
@@ -22,6 +22,9 @@ func (unitTimeAdapter *UnitTimeAdapter) GetUnitTimeAdapter() ([]dto.UnitTimeDTO,
 			&unitTime.Frequency,
 			&unitTime.Description,
 			&unitTime.IsActive,
+			&unitTime.Code,
+			&unitTime.Singular,
+			&unitTime.Plural,
 		)
 
 		if err != nil {
