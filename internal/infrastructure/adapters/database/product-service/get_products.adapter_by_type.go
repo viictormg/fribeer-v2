@@ -2,12 +2,17 @@ package adapters
 
 import (
 	"errors"
+	"fmt"
 
+	"github.com/sirupsen/logrus"
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 )
 
 func (productAdapter *ProductAdapter) GetProductsByTypeAdapter(typeProduct, companyID string) ([]dto.ProductResponseGet, error) {
 	var products []dto.ProductResponseGet
+
+	fmt.Println("company", companyID)
+	fmt.Println("type", typeProduct)
 
 	const query = `SELECT p.id, name, p.description, tp.description AS typeProduct,
 						IFNULL(mu.description, "") AS measureUnit, 
@@ -15,7 +20,8 @@ func (productAdapter *ProductAdapter) GetProductsByTypeAdapter(typeProduct, comp
 						IFNULL(MinStock, 0) AS minStock, 
 						Price, Cost, IF(IsFrequency = 1, true, false) AS isFrequency,
 						IFNULL(ut.frequency, "") AS unitTime, IFNULL(p.Duration, 0) AS duration,
-						IF(p.isActive = 1,true, false) AS isActive
+						IF(p.isActive = 1,true, false) AS isActive, 
+						IFNULL(ut.code, "") AS unitTimeCode
 					FROM Product p
 					INNER JOIN TypeProduct tp ON p.TypeProduct = tp.id
 					LEFT JOIN MeasureUnit mu ON p.measureUnit = mu.id
@@ -26,6 +32,7 @@ func (productAdapter *ProductAdapter) GetProductsByTypeAdapter(typeProduct, comp
 	rows, err := productAdapter.db.Query(query, companyID, typeProduct)
 
 	if err != nil {
+		logrus.Error(err)
 		return products, errors.New(errDBGetAllProducts)
 	}
 
@@ -48,6 +55,7 @@ func (productAdapter *ProductAdapter) GetProductsByTypeAdapter(typeProduct, comp
 			&product.UnitTime,
 			&product.Duration,
 			&product.IsActive,
+			&product.UnitTimeCode,
 		)
 
 		if err != nil {
