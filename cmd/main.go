@@ -46,6 +46,7 @@ import (
 	AuthUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/auth"
 	authHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/auth"
 
+	serviceCardUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/service_card"
 	campusServices "github.com/viictormg/fribeer-v2/internal/domain/service/campus"
 	serviceCardHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/service_card"
 
@@ -107,7 +108,9 @@ func main() {
 	AuthUsecase := AuthUsecases.NewAuthUsecase(accountService, campuseService)
 	authHandler := authHandlers.NewAuthHandler(AuthUsecase)
 
-	serviceCardHandler := serviceCardHandlers.NewServiceCardHandler()
+	serviceCardUsecase := serviceCardUsecases.NewServiceUsecase(serviceCardService)
+
+	serviceCardHandler := serviceCardHandlers.NewServiceCardHandler(serviceCardUsecase)
 
 	srv := server.NewServer(
 		port,
