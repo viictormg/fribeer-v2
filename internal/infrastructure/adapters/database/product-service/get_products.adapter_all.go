@@ -17,12 +17,13 @@ func (productAdapter *ProductAdapter) GetProductsAllAdapter(companyID string) ([
 						IFNULL(MinStock, 0) AS minStock, 
 						Price, Cost, IF(IsFrequency = 1, true, false) AS isFrequency,
 						IFNULL(ut.frequency, "") AS unitTime, IFNULL(p.Duration, 0) AS duration,
-						IF(p.isActive = 1,true, false) AS isActive
+						IF(p.isActive = 1,true, false) AS isActive,
+						IFNULL(ut.code, "") AS unitTimeCode
 					FROM Product p
 					INNER JOIN TypeProduct tp ON p.TypeProduct = tp.id
 					LEFT JOIN MeasureUnit mu ON p.measureUnit = mu.id
 					LEFT JOIN UnitTime ut ON ut.id = p.unitTime
-					WHERE p.company  = ?`
+					WHERE p.company = ?`
 
 	rows, err := productAdapter.db.Query(query, companyID)
 
@@ -49,6 +50,7 @@ func (productAdapter *ProductAdapter) GetProductsAllAdapter(companyID string) ([
 			&product.UnitTime,
 			&product.Duration,
 			&product.IsActive,
+			&product.UnitTimeCode,
 		)
 
 		if err != nil {

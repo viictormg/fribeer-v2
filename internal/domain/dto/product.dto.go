@@ -14,4 +14,5 @@ type ProductResponseGet struct {
 	UnitTime      string  `json:"unitTime"`
 	Duration      int     `json:"duration"`
 	IsActive      bool    `json:"isActive"`
+	UnitTimeCode  string  `json:"unitTimeCode"`
 }
