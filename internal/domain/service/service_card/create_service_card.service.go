@@ -11,9 +11,7 @@ func (s *ServiceCardSerivice) CreateServiceCardService(cards []entity.ServiceCar
 	for _, card := range cards {
 		trx, err := s.serviceCardAdapter.CreateServiceCardAdapter(card, trx)
 		if err != nil {
-			if err != nil {
-				return trx, err
-			}
+			return trx, err
 		}
 	}
 
