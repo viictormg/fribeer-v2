@@ -10,6 +10,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 	authHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/auth"
+	serviceCardJobs "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/cronjob"
 	customerHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/customer"
 	measureHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/measure_unit"
 	productHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/product"
@@ -29,6 +30,7 @@ type Server struct {
 	SaleHandlers        saleHandlers.SaleHandler
 	authHandler         authHandlers.AuthHandler
 	ServiceCard         serviceCards.ServiceCardHandler
+	serviceCardJob      serviceCardJobs.CronJobHandler
 }
 
 func NewServer(
@@ -41,6 +43,7 @@ func NewServer(
 	SaleHandlers saleHandlers.SaleHandler,
 	authHandler authHandlers.AuthHandler,
 	ServiceCard serviceCards.ServiceCardHandler,
+	serviceCardJob serviceCardJobs.CronJobHandler,
 
 ) *Server {
 	return &Server{
@@ -53,6 +56,7 @@ func NewServer(
 		SaleHandlers:        SaleHandlers,
 		authHandler:         authHandler,
 		ServiceCard:         ServiceCard,
+		serviceCardJob:      serviceCardJob,
 	}
 }
 
@@ -100,6 +104,7 @@ func (s *Server) RunServer() {
 	apiPulic.POST("/login", s.authHandler.LoginHandler)
 
 	apiPulic.GET("/serviceCard", s.ServiceCard.GetServiceCardHandler)
+	apiPrivate.GET("/serviceCardJob", s.serviceCardJob.ServiceCardJob)
 
 	err := e.Start(":" + s.Port)
 	if err != nil {

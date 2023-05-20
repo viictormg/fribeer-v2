@@ -48,6 +48,7 @@ import (
 
 	serviceCardUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/service_card"
 	campusServices "github.com/viictormg/fribeer-v2/internal/domain/service/campus"
+	serviceCardJobs "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/cronjob"
 	serviceCardHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/service_card"
 
 	database "github.com/viictormg/fribeer-v2/internal/infrastructure/pkg/database"
@@ -109,8 +110,9 @@ func main() {
 	authHandler := authHandlers.NewAuthHandler(AuthUsecase)
 
 	serviceCardUsecase := serviceCardUsecases.NewServiceUsecase(serviceCardService)
-
 	serviceCardHandler := serviceCardHandlers.NewServiceCardHandler(serviceCardUsecase)
+
+	serviceCardJob := serviceCardJobs.NewCronJobHandler()
 
 	srv := server.NewServer(
 		port,
@@ -122,6 +124,7 @@ func main() {
 		*saleHandler,
 		*authHandler,
 		*serviceCardHandler,
+		*serviceCardJob,
 	)
 
 	srv.RunServer()
