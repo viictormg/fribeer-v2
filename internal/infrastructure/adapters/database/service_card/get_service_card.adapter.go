@@ -1,16 +1,25 @@
 package adapters
 
-import "github.com/viictormg/fribeer-v2/internal/domain/dto"
+import (
+	"github.com/sirupsen/logrus"
+	"github.com/viictormg/fribeer-v2/internal/domain/dto"
+)
 
 func (s *ServiceCardAdapter) GetServiceCardAdapter(companyID string) ([]dto.GetServiceCardDTO, error) {
 	cards := []dto.GetServiceCardDTO{}
 
-	query := `SELECT id, serviceName, description 
-				FROM ServiceCard WHERE company = ?;`
+	query := `SELECT s.id, serviceName, s.description, s.startDate, s.endDate, ABS(DATEDIFF(NOW(), s.endDate)) AS expiration,
+				CONCAT_WS(" ",p.firstName, p.secondName, p.surname, p.secondName)AS customer,
+				st.name
+				FROM ServiceCard s
+				JOIN People p ON s.customer = p.id
+				JOIN State st ON  s.state = st.id
+				WHERE s.company = ?;`
 
 	rows, err := s.db.Query(query, companyID)
 
 	if err != nil {
+		logrus.Error(err)
 		return cards, err
 	}
 
@@ -23,9 +32,15 @@ func (s *ServiceCardAdapter) GetServiceCardAdapter(companyID string) ([]dto.GetS
 			&card.ID,
 			&card.ServiceName,
 			&card.Description,
+			&card.StartDate,
+			&card.EndDate,
+			&card.Expiration,
+			&card.CustomerName,
+			&card.State,
 		)
 
 		if err != nil {
+			logrus.Error(err)
 			defer rows.Close()
 			return cards, err
 		}
