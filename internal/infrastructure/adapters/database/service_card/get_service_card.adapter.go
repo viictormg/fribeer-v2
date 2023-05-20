@@ -10,7 +10,7 @@ func (s *ServiceCardAdapter) GetServiceCardAdapter(companyID string) ([]dto.GetS
 
 	query := `SELECT s.id, serviceName, s.description, s.startDate, s.endDate, ABS(DATEDIFF(NOW(), s.endDate)) AS expiration,
 				CONCAT_WS(" ",p.firstName, p.secondName, p.surname, p.secondName)AS customer,
-				st.name
+				st.name, st.code
 				FROM ServiceCard s
 				JOIN People p ON s.customer = p.id
 				JOIN State st ON  s.state = st.id
@@ -37,6 +37,7 @@ func (s *ServiceCardAdapter) GetServiceCardAdapter(companyID string) ([]dto.GetS
 			&card.Expiration,
 			&card.CustomerName,
 			&card.State,
+			&card.StateCode,
 		)
 
 		if err != nil {
