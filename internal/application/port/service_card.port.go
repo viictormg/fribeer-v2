@@ -10,4 +10,5 @@ import (
 type IServiceCardService interface {
 	CreateServiceCardService(cards []entity.ServiceCardEntity, trx *sql.Tx) (*sql.Tx, error)
 	GetServiceCardService(companyID string) ([]dto.GetServiceCardDTO, error)
+	GetAllServiceCardService() ([]dto.GetServiceCardDTO, error)
 }

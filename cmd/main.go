@@ -112,7 +112,7 @@ func main() {
 	serviceCardUsecase := serviceCardUsecases.NewServiceUsecase(serviceCardService)
 	serviceCardHandler := serviceCardHandlers.NewServiceCardHandler(serviceCardUsecase)
 
-	serviceCardJob := serviceCardJobs.NewCronJobHandler()
+	serviceCardJob := serviceCardJobs.NewCronJobHandler(serviceCardUsecase)
 
 	srv := server.NewServer(
 		port,

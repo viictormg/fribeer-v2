@@ -6,6 +6,8 @@ type CronJobHandler struct {
 	serviceCardUsecase port.IServiceCardUsecase
 }
 
-func NewCronJobHandler() *CronJobHandler {
-	return &CronJobHandler{}
+func NewCronJobHandler(serviceCardUsecase port.IServiceCardUsecase) *CronJobHandler {
+	return &CronJobHandler{
+		serviceCardUsecase: serviceCardUsecase,
+	}
 }

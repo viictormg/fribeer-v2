@@ -1,7 +1,13 @@
 package api
 
-import "github.com/labstack/echo/v4"
+import (
+	"github.com/labstack/echo/v4"
+	"github.com/sirupsen/logrus"
+)
 
-func (c *CronJobHandler) ServiceCardJob(e echo.Context) error {
-	return nil
+func (cron *CronJobHandler) ServiceCardJob(c echo.Context) error {
+	response := cron.serviceCardUsecase.JobServiceCardUsecase()
+
+	logrus.Error(response)
+	return response
 }
