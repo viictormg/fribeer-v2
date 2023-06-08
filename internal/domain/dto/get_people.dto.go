@@ -6,4 +6,5 @@ type GetPeopleDTO struct {
 	Document string `json:"document"`
 	Phone    string `json:"phone"`
 	Email    string `json:"email"`
+	Active   bool   `json:"active"`
 }

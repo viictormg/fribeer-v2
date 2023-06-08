@@ -8,4 +8,5 @@ import (
 type IPeopleService interface {
 	CreatePeopleService(people entity.PeopleEntity, companyID string) (dto.CreationDTO, error)
 	GetCustomerService(companyID string) ([]dto.GetPeopleDTO, error)
+	GetPersonByIDService(companyID, id string) (dto.GetPeopleDTO, error)
 }

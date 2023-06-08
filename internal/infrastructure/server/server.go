@@ -13,6 +13,7 @@ import (
 	serviceCardJobs "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/cronjob"
 	customerHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/customer"
 	measureHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/measure_unit"
+	PeopleHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/people"
 	productHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/product"
 	saleHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/sale"
 	serviceCards "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/service_card"
@@ -31,6 +32,7 @@ type Server struct {
 	authHandler         authHandlers.AuthHandler
 	ServiceCard         serviceCards.ServiceCardHandler
 	serviceCardJob      serviceCardJobs.CronJobHandler
+	peopleHandlers      PeopleHandlers.PeopleHandler
 }
 
 func NewServer(
@@ -44,6 +46,7 @@ func NewServer(
 	authHandler authHandlers.AuthHandler,
 	ServiceCard serviceCards.ServiceCardHandler,
 	serviceCardJob serviceCardJobs.CronJobHandler,
+	peopleHandlers PeopleHandlers.PeopleHandler,
 
 ) *Server {
 	return &Server{
@@ -57,6 +60,7 @@ func NewServer(
 		authHandler:         authHandler,
 		ServiceCard:         ServiceCard,
 		serviceCardJob:      serviceCardJob,
+		peopleHandlers:      peopleHandlers,
 	}
 }
 
@@ -105,6 +109,8 @@ func (s *Server) RunServer() {
 
 	apiPulic.GET("/serviceCard", s.ServiceCard.GetServiceCardHandler)
 	apiPrivate.GET("/serviceCardJob", s.serviceCardJob.ServiceCardJob)
+
+	apiPrivate.GET("/person/:id", s.peopleHandlers.GetPersonByIDHandler)
 
 	err := e.Start(":" + s.Port)
 	if err != nil {

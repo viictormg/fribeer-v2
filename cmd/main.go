@@ -51,6 +51,9 @@ import (
 	serviceCardJobs "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/cronjob"
 	serviceCardHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/service_card"
 
+	PeopleUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/people"
+	PeopleHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/people"
+
 	database "github.com/viictormg/fribeer-v2/internal/infrastructure/pkg/database"
 	"github.com/viictormg/fribeer-v2/internal/infrastructure/server"
 )
@@ -114,6 +117,10 @@ func main() {
 
 	serviceCardJob := serviceCardJobs.NewCronJobHandler(serviceCardUsecase)
 
+	peopleUsecase := PeopleUsecases.NewPeopleUsecase(peopleService)
+
+	peopleHandler := PeopleHandlers.NewPeopleHandler(peopleUsecase)
+
 	srv := server.NewServer(
 		port,
 		*productHandler,
@@ -125,6 +132,7 @@ func main() {
 		*authHandler,
 		*serviceCardHandler,
 		*serviceCardJob,
+		*peopleHandler,
 	)
 
 	srv.RunServer()
