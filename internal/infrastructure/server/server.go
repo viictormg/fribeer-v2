@@ -107,7 +107,9 @@ func (s *Server) RunServer() {
 	apiPulic.GET("/sale", s.SaleHandlers.GetSalesHandler)
 	apiPulic.POST("/login", s.authHandler.LoginHandler)
 
-	apiPulic.GET("/serviceCard", s.ServiceCard.GetServiceCardHandler)
+	apiPrivate.GET("/serviceCard", s.ServiceCard.GetServiceCardHandler)
+	apiPrivate.GET("/serviceCard/:id", s.ServiceCard.GetServiceCardByIDHandler)
+
 	apiPrivate.GET("/serviceCardJob", s.serviceCardJob.ServiceCardJob)
 
 	apiPrivate.GET("/person/:id", s.peopleHandlers.GetPersonByIDHandler)
