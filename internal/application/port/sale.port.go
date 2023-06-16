@@ -11,7 +11,7 @@ import (
 
 type ISaleService interface {
 	CreateSaleService(sale entity.SaleCreationEntity, ctx context.Context) (dto.CreationDTO, *sql.Tx, error)
-	GetDetailProductsService(product []model.ProductCreateSaleModel, companyID string) ([]dto.DetailProductToCreateSale, float64, error)
+	GetDetailProductsService(product []model.ProductCreateSaleModel, companyID string) dto.DetailSaleToCreateSale
 	CreateDetailSaleService(saleDetails []entity.SaleDetailEntity, trx *sql.Tx, companyID string) (*sql.Tx, error)
 	GetSalesService(companyID, campus string) ([]dto.SaleDTO, error)
 }

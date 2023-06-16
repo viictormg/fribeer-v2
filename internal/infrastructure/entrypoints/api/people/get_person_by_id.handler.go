@@ -33,6 +33,6 @@ func (people *PeopleHandler) GetPersonByIDHandler(c echo.Context) error {
 		Data:      person,
 		Timestamp: time.Now(),
 	}
-	return c.JSON(http.StatusCreated, response)
+	return c.JSON(http.StatusOK, response)
 
 }

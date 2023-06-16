@@ -12,16 +12,16 @@ import (
 func (saleUsecase *SaleUsecase) CreateSaleUsecase(sale model.CreateSaleModel, companyID, campus string) (dto.CreationDTO, error) {
 	//Pendiente logia de descuentos en el detalle
 
-	saleDetails, total, err := saleUsecase.saleService.GetDetailProductsService(sale.Products, companyID)
+	responseDetail := saleUsecase.saleService.GetDetailProductsService(sale.Products, companyID)
 
-	if err != nil {
-		logrus.Error(err)
-		return dto.CreationDTO{}, err
+	if responseDetail.Error != nil {
+		logrus.Error(responseDetail.Error)
+		return dto.CreationDTO{}, responseDetail.Error
 	}
 
 	ctx := context.Background()
 
-	saleEntity := mapper.MappSaleModelToSaleEntity(sale, total, companyID, campus)
+	saleEntity := mapper.MappSaleModelToSaleEntity(sale, responseDetail.Total, companyID, campus)
 	saleCreated, trx, err := saleUsecase.saleService.CreateSaleService(saleEntity, ctx)
 
 	if err != nil {
@@ -31,7 +31,7 @@ func (saleUsecase *SaleUsecase) CreateSaleUsecase(sale model.CreateSaleModel, co
 		return dto.CreationDTO{}, err
 	}
 
-	saleDetailsToCreate := mapper.MapProductsToSaleDetail(saleDetails, saleCreated.ID)
+	saleDetailsToCreate := mapper.MapProductsToSaleDetail(responseDetail.Details, saleCreated.ID)
 	trx, err = saleUsecase.saleService.CreateDetailSaleService(saleDetailsToCreate, trx, companyID)
 
 	if err != nil {
@@ -42,7 +42,7 @@ func (saleUsecase *SaleUsecase) CreateSaleUsecase(sale model.CreateSaleModel, co
 		return dto.CreationDTO{}, err
 	}
 
-	cardsSerivces := mapper.MapperCreateCardService(saleDetails, saleEntity.Customer, saleCreated.ID, companyID)
+	cardsSerivces := mapper.MapperCreateCardService(responseDetail.Details, saleEntity.Customer, saleCreated.ID, companyID)
 
 	if len(cardsSerivces) > 0 {
 		trx, err = saleUsecase.serviceCard.CreateServiceCardService(cardsSerivces, trx)
