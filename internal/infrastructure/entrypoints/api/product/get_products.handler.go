@@ -7,12 +7,14 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/viictormg/fribeer-v2/internal/domain/constants"
 	infradto "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api"
+	"github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/utils"
 )
 
 func (productHandler *ProductHandler) GetProductsHandler(c echo.Context) error {
 	typeProduct := c.QueryParam("type")
+	payload := utils.GetClaimsToken(c)
 
-	products, err := productHandler.productUsecase.GetProductsUsecase(typeProduct, constants.CompanyIDTest)
+	products, err := productHandler.productUsecase.GetProductsUsecase(typeProduct, payload.CompanyID)
 
 	if err != nil {
 		response := infradto.Response{
