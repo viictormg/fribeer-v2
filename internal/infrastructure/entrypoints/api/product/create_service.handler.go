@@ -8,6 +8,7 @@ import (
 	"github.com/viictormg/fribeer-v2/internal/application/model"
 	"github.com/viictormg/fribeer-v2/internal/domain/constants"
 	infradto "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api"
+	"github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/utils"
 )
 
 func (productHandler *ProductHandler) CreateServiceHandler(c echo.Context) error {
@@ -35,8 +36,9 @@ func (productHandler *ProductHandler) CreateServiceHandler(c echo.Context) error
 		}
 		return c.JSON(http.StatusBadRequest, response)
 	}
+	payload := utils.GetClaimsToken(c)
 
-	creation, err := productHandler.productUsecase.CreateServiceUsecase(service, constants.CompanyIDTest)
+	creation, err := productHandler.productUsecase.CreateServiceUsecase(service, payload.CompanyID)
 	if err != nil {
 		response := infradto.Response{
 			Success:   false,
