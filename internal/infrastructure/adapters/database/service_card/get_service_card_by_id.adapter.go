@@ -9,7 +9,7 @@ func (s *ServiceCardAdapter) GetServiceCardByIDAdapter(companyID, id string) (dt
 	var card dto.GetServiceCardDTO
 	query := `SELECT s.id, serviceName, s.description, s.startDate, s.endDate, ABS(DATEDIFF(NOW(), s.endDate)) AS expiration,
 				CONCAT_WS(" ",p.firstName, p.secondName, p.surname, p.lastSurname)AS customer,
-				st.name, st.code
+				st.name, st.code, p.id AS customerID
 				FROM ServiceCard s
 				JOIN People p ON s.customer = p.id
 				JOIN State st ON  s.state = st.id
@@ -25,6 +25,7 @@ func (s *ServiceCardAdapter) GetServiceCardByIDAdapter(companyID, id string) (dt
 		&card.CustomerName,
 		&card.State,
 		&card.StateCode,
+		&card.CustomerID,
 	)
 	if err != nil {
 		logrus.Error(err)

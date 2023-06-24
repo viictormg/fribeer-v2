@@ -11,4 +11,5 @@ type GetServiceCardDTO struct {
 	State        string `json:"state"`
 	StateCode    string `json:"stateCode"`
 	Expiration   int64  `json:"expiration"`
+	CustomerID   string `json:"customerID"`
 }
