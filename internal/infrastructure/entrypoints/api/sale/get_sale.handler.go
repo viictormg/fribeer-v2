@@ -23,6 +23,16 @@ func (saleHandler *SaleHandler) GetSalesHandler(c echo.Context) error {
 		}
 		return c.JSON(http.StatusConflict, response)
 	}
+
+	if len(sales) == 0 {
+		response := infradto.Response{
+			Success:   false,
+			Message:   constants.MessageNotFound,
+			Timestamp: time.Now(),
+		}
+		return c.JSON(http.StatusOK, response)
+	}
+
 	response := infradto.Response{
 		Success:   true,
 		Data:      sales,

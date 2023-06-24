@@ -5,7 +5,7 @@ import (
 )
 
 func (saleAdapter *SaleAdapter) GetSalesAdapter(companyID, campus string) ([]dto.SaleDTO, error) {
-	var sales []dto.SaleDTO
+	sales := []dto.SaleDTO{}
 	query := `SELECT sa.id, pe.firstName, sa.saleDate, sa.total, st.name
 				FROM Sale sa
 				JOIN People pe ON sa.customer = pe.id
