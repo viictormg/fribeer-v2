@@ -32,7 +32,6 @@ func (customerHandler *CustomerHandler) GetCustomerHandler(c echo.Context) error
 			Timestamp: time.Now(),
 		}
 		return c.JSON(http.StatusOK, response)
-
 	}
 
 	response := infradto.Response{
