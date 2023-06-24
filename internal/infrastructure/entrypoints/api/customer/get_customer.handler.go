@@ -25,6 +25,16 @@ func (customerHandler *CustomerHandler) GetCustomerHandler(c echo.Context) error
 		return c.JSON(http.StatusConflict, response)
 	}
 
+	if len(customers) == 0 {
+		response := infradto.Response{
+			Success:   true,
+			Message:   constants.MessageNotFound,
+			Timestamp: time.Now(),
+		}
+		return c.JSON(http.StatusOK, response)
+
+	}
+
 	response := infradto.Response{
 		Success:   true,
 		Data:      customers,
