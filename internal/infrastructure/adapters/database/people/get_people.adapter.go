@@ -10,7 +10,7 @@ import (
 const errorDBGetCustomer = "error consulting db"
 
 func (peopleAdapter *PeopleAdapter) GetCustomerAdapter(companyID string) ([]dto.GetPeopleDTO, error) {
-	var customers []dto.GetPeopleDTO
+	customers := []dto.GetPeopleDTO{}
 
 	const query = `SELECT p.id, CONCAT_WS(" ", p.firstName, p.secondName, p.surname, p.lastSurname) AS fullName,
 						p.documentNumber, p.phone, p.email,

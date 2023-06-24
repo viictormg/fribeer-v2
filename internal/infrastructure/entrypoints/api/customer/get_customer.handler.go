@@ -31,6 +31,6 @@ func (customerHandler *CustomerHandler) GetCustomerHandler(c echo.Context) error
 		Message:   constants.MessageFound,
 		Timestamp: time.Now(),
 	}
-	return c.JSON(http.StatusCreated, response)
+	return c.JSON(http.StatusOK, response)
 
 }
