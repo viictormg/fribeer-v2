@@ -7,11 +7,13 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/viictormg/fribeer-v2/internal/domain/constants"
 	infradto "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api"
+	"github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/utils"
 )
 
 func (customerHandler *CustomerHandler) GetCustomerHandler(c echo.Context) error {
+	payload := utils.GetClaimsToken(c)
 
-	customers, err := customerHandler.customerUsecase.GetCustomerUsecase(constants.CompanyIDTest)
+	customers, err := customerHandler.customerUsecase.GetCustomerUsecase(payload.CompanyID)
 
 	if err != nil {
 		response := infradto.Response{
