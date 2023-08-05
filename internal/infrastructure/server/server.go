@@ -94,6 +94,7 @@ func (s *Server) RunServer() {
 
 	apiPrivate.POST("/product", s.ProductHandler.CreateProductHandler)
 	apiPrivate.GET("/product", s.ProductHandler.GetProductsHandler)
+	apiPrivate.GET("/product/:id", s.ProductHandler.GetProductByIDHandler)
 
 	apiPulic.POST("/service", s.ProductHandler.CreateServiceHandler)
 	apiPulic.GET("/measureUnit", s.MeasuerUnitHandler.GetMeasureUnitHandler)

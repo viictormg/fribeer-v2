@@ -9,4 +9,5 @@ type IProductUsecase interface {
 	CreateProductUsecase(product model.ProductModel, companyID string) (dto.CreationDTO, error)
 	CreateServiceUsecase(product model.ServiceModel, companyID string) (dto.CreationDTO, error)
 	GetProductsUsecase(typeProduct, companyID string) ([]dto.ProductResponseGet, error)
+	GetProductByIDUsecase(id, companyID string) (dto.ProductResponseGet, error)
 }
