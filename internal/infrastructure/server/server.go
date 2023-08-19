@@ -13,6 +13,7 @@ import (
 	serviceCardJobs "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/cronjob"
 	customerHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/customer"
 	measureHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/measure_unit"
+	paymentHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/payment"
 	PeopleHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/people"
 	productHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/product"
 	saleHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/sale"
@@ -33,6 +34,7 @@ type Server struct {
 	ServiceCard         serviceCards.ServiceCardHandler
 	serviceCardJob      serviceCardJobs.CronJobHandler
 	peopleHandlers      PeopleHandlers.PeopleHandler
+	paymentHandler      paymentHandlers.PaymentHandler
 }
 
 func NewServer(
@@ -47,6 +49,7 @@ func NewServer(
 	ServiceCard serviceCards.ServiceCardHandler,
 	serviceCardJob serviceCardJobs.CronJobHandler,
 	peopleHandlers PeopleHandlers.PeopleHandler,
+	paymentHandler paymentHandlers.PaymentHandler,
 
 ) *Server {
 	return &Server{
@@ -112,8 +115,9 @@ func (s *Server) RunServer() {
 	apiPrivate.GET("/serviceCard/:id", s.ServiceCard.GetServiceCardByIDHandler)
 
 	apiPrivate.GET("/serviceCardJob", s.serviceCardJob.ServiceCardJob)
-
 	apiPrivate.GET("/person/:id", s.peopleHandlers.GetPersonByIDHandler)
+
+	apiPrivate.POST("/payment", s.paymentHandler.CreatePaymentHandler)
 
 	err := e.Start(":" + s.Port)
 	if err != nil {
