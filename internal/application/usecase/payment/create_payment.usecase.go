@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/sirupsen/logrus"
+	"github.com/viictormg/fribeer-v2/internal/application/mapper"
 	"github.com/viictormg/fribeer-v2/internal/application/model"
 	"github.com/viictormg/fribeer-v2/internal/domain/dto"
 )
@@ -23,7 +24,9 @@ func (p *PaymentUsecase) CreatePaymentUsecase(companyID string, payment model.Pa
 
 	fmt.Println("Total to pay ", totalToPAy)
 	//Crear encabezado
-	creation, tx, err := p.paymentService.CreatePaymentService()
+
+	paymentEntity := mapper.MapPaymentModelToPaymentEntity()
+	creation, tx, err := p.paymentService.CreatePaymentService(paymentEntity)
 
 	//guardar detalle
 
