@@ -64,6 +64,7 @@ func NewServer(
 		ServiceCard:         ServiceCard,
 		serviceCardJob:      serviceCardJob,
 		peopleHandlers:      peopleHandlers,
+		paymentHandler:      paymentHandler,
 	}
 }
 

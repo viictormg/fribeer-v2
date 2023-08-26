@@ -44,6 +44,8 @@ import (
 	saleHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/sale"
 
 	AuthUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/auth"
+	paymentUsecases "github.com/viictormg/fribeer-v2/internal/application/usecase/payment"
+	paymentServices "github.com/viictormg/fribeer-v2/internal/domain/service/payment"
 	authHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/auth"
 	paymentHandlers "github.com/viictormg/fribeer-v2/internal/infrastructure/entrypoints/api/payment"
 
@@ -121,8 +123,11 @@ func main() {
 	peopleUsecase := PeopleUsecases.NewPeopleUsecase(peopleService)
 
 	peopleHandler := PeopleHandlers.NewPeopleHandler(peopleUsecase)
+	paymentService := paymentServices.NewPaymentService()
 
-	paymentHandler := paymentHandlers.NewPaymentHandler()
+	paymentUsecase := paymentUsecases.NewPaymentUsecase(paymentService, saleService)
+
+	paymentHandler := paymentHandlers.NewPaymentHandler(paymentUsecase)
 
 	srv := server.NewServer(
 		port,

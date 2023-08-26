@@ -14,4 +14,5 @@ type ISaleService interface {
 	GetDetailProductsService(product []model.ProductCreateSaleModel, companyID string) dto.DetailSaleToCreateSale
 	CreateDetailSaleService(saleDetails []entity.SaleDetailEntity, trx *sql.Tx, companyID string) (*sql.Tx, error)
 	GetSalesService(companyID, campus string) ([]dto.SaleDTO, error)
+	GetSaleByIDService(companyID, id string) (dto.SaleDTO, error)
 }

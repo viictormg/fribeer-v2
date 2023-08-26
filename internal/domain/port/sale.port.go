@@ -12,4 +12,5 @@ type ISaleAdapter interface {
 	CreateSaleAdapter(sale entity.SaleCreationEntity, ctx context.Context) (dto.CreationDTO, *sql.Tx, error)
 	CreateDetailSaleAdapter(sale entity.SaleDetailEntity, trx *sql.Tx, companyID string) (*sql.Tx, error)
 	GetSalesAdapter(companyID, campus string) ([]dto.SaleDTO, error)
+	GetSaleByIDAdapter(companyID, id string) (dto.SaleDTO, error)
 }

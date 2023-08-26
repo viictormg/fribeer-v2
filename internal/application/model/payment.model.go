@@ -8,9 +8,8 @@ import (
 )
 
 type PaymentModel struct {
-	TypePayment   string   `json:"typePayment"`
+	TypePayment   string   `json:"idTypePayment"`
 	PaymentMethod string   `json:"idPaymentMethod"`
-	Total         float64  `json:"total"`
 	Observations  string   `json:"observations"`
 	Reason        string   `json:"reason"`
 	State         string   `json:"idState"`
@@ -21,8 +20,6 @@ func (p *PaymentModel) Validate() []string {
 	err := validation.ValidateStruct(p,
 		validation.Field(&p.TypePayment, validation.Required.Error(constants.FieldRequiredMessage)),
 		validation.Field(&p.PaymentMethod, validation.Required.Error(constants.FieldRequiredMessage)),
-		validation.Field(&p.Total, validation.Required.Error(constants.FieldRequiredMessage)),
-		validation.Field(&p.Total, validation.Min(0.0).Error(constants.FieldMustBeGreaterThanZero)),
 		validation.Field(&p.IDsDetails, validation.Required.Error(constants.FieldRequiredMessage)),
 	)
 
