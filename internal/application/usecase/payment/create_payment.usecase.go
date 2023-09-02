@@ -25,8 +25,11 @@ func (p *PaymentUsecase) CreatePaymentUsecase(companyID string, payment model.Pa
 	fmt.Println("Total to pay ", totalToPAy)
 	//Crear encabezado
 
-	paymentEntity := mapper.MapPaymentModelToPaymentEntity()
-	creation, tx, err := p.paymentService.CreatePaymentService(paymentEntity)
+	paymentEntity := mapper.MapPaymentModelToPaymentEntity(payment, totalToPAy)
+	creation, _, err := p.paymentService.CreatePaymentService(paymentEntity)
+
+	fmt.Println(creation)
+	fmt.Println(err)
 
 	//guardar detalle
 
