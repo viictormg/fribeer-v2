@@ -143,6 +143,5 @@ func main() {
 		*peopleHandler,
 		*paymentHandler,
 	)
-	//HOLA
 	srv.RunServer()
 }

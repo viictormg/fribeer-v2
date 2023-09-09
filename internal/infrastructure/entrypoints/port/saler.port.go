@@ -7,5 +7,5 @@ import (
 
 type ISaleUsecase interface {
 	CreateSaleUsecase(sale model.CreateSaleModel, companyID, campus string) (dto.CreationDTO, error)
-	GetSalesUsecase(companyID, campus string) ([]dto.SaleDTO, error)
+	GetSalesUsecase(companyID string, paramsFind dto.ParamsFindSales) ([]dto.SaleDTO, error)
 }
